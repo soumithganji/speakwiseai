@@ -1,42 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/left_chat_view"
-        android:layout_width="wrap_content"
+        android:id="@+id/bot_chat_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
-        android:background="@drawable/rounded_corner"
-        android:backgroundTint="#1E88E5"
-        android:padding="8dp">
+        android:background="@color/primary_light_grey"
+        android:padding="16dp">
 
         <TextView
-            android:id="@+id/left_chat_text_view"
+            android:id="@+id/bot_chat_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
+
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/right_chat_view"
-        android:layout_width="wrap_content"
+        android:id="@+id/user_chat_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="80dp"
-        android:background="@drawable/rounded_corner"
-        android:backgroundTint="#7CB342"
-        android:padding="8dp">
+        android:layout_alignParentStart="true"
+        android:background="@color/primary_dark_grey"
+        android:padding="16dp">
 
         <TextView
-            android:id="@+id/right_chat_text_view"
+            android:id="@+id/user_chat_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

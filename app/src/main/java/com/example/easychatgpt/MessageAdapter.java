@@ -30,13 +30,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Message message = messageList.get(position);
         if (message.getSentBy().equals(Message.SENT_BY_ME)) {
-            holder.leftChatView.setVisibility(View.GONE);
-            holder.rightChatView.setVisibility(View.VISIBLE);
-            holder.rightTextView.setText(message.getMessage());
+            holder.botChatView.setVisibility(View.GONE);
+            holder.userChatView.setVisibility(View.VISIBLE);
+            holder.userTextView.setText(message.getMessage());
         } else {
-            holder.rightChatView.setVisibility(View.GONE);
-            holder.leftChatView.setVisibility(View.VISIBLE);
-            holder.leftTextView.setText(message.getMessage());
+            holder.userChatView.setVisibility(View.GONE);
+            holder.botChatView.setVisibility(View.VISIBLE);
+            holder.botTextView.setText(message.getMessage());
         }
     }
 
@@ -46,15 +46,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout leftChatView, rightChatView;
-        TextView leftTextView, rightTextView;
+        LinearLayout botChatView, userChatView;
+        TextView botTextView, userTextView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            leftChatView = itemView.findViewById(R.id.left_chat_view);
-            rightChatView = itemView.findViewById(R.id.right_chat_view);
-            leftTextView = itemView.findViewById(R.id.left_chat_text_view);
-            rightTextView = itemView.findViewById(R.id.right_chat_text_view);
+            botChatView = itemView.findViewById(R.id.bot_chat_view);
+            userChatView = itemView.findViewById(R.id.user_chat_view);
+            botTextView = itemView.findViewById(R.id.bot_chat_text_view);
+            userTextView = itemView.findViewById(R.id.user_chat_text_view);
         }
     }
 }

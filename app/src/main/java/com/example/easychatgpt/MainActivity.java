@@ -60,9 +60,8 @@ public class MainActivity extends AppCompatActivity {
         //while loading second time(i.e chat instances, do not load messages with something went wrong)
 
 
-        messageList.add(new Message("Hi", Message.SENT_BY_ME));
+//        messageList.add(new Message("Hi", Message.SENT_BY_ME));
         messageList.add(new Message("Hi! How can I help you!", Message.SENT_BY_BOT));
-
 
         messageAdapter = new MessageAdapter(messageList);
         binding.recyclerView.setAdapter(messageAdapter);
