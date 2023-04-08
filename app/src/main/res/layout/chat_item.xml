@@ -12,30 +12,36 @@
 
         <TextView
             android:id="@+id/bot_chat_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="16dp"
-            android:layout_toStartOf="@+id/imCopy"
+            android:layout_toStartOf="@+id/llCopy"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/imCopy"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_toStartOf="@+id/imShare"
-            android:background="@drawable/ic_copy"
-            android:backgroundTint="#ACACBD" />
+        <LinearLayout
+            android:id="@+id/llCopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
 
-        <ImageView
-            android:id="@+id/imShare"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/ic_share"
-            android:backgroundTint="#ACACBD" />
+            <ImageView
+                android:id="@+id/imCopy"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/ic_copy"
+                android:backgroundTint="#ACACBD" />
+
+            <ImageView
+                android:id="@+id/imShare"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/ic_share"
+                android:backgroundTint="#ACACBD" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

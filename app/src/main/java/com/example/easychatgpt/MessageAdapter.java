@@ -50,6 +50,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             holder.botTextView.setText(message.getMessage());
         }
 
+        if (message.showCopyOptions()) {
+            holder.llCopy.setVisibility(View.VISIBLE);
+        } else {
+            holder.llCopy.setVisibility(View.GONE);
+        }
+
         holder.imCopy.setOnClickListener(v -> {
             ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("label", message.getMessage());
@@ -63,7 +69,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             intent.putExtra(Intent.EXTRA_TEXT, message.getMessage());
             activity.startActivity(Intent.createChooser(intent, "Share via"));
         });
-
     }
 
     @Override
@@ -73,6 +78,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout botChatView;
+        LinearLayout llCopy;
         LinearLayout userChatView;
         TextView botTextView, userTextView;
         ImageView imCopy, imShare;
@@ -85,6 +91,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             userTextView = itemView.findViewById(R.id.user_chat_text_view);
             imCopy = itemView.findViewById(R.id.imCopy);
             imShare = itemView.findViewById(R.id.imShare);
+            llCopy = itemView.findViewById(R.id.llCopy);
         }
     }
 }

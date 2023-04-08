@@ -7,6 +7,8 @@ public class Message {
     private String message;
     private String sentBy;
 
+    private boolean showCopyOptions;
+
     public String getMessage() {
         return message;
     }
@@ -23,8 +25,17 @@ public class Message {
         this.sentBy = sentBy;
     }
 
-    public Message(String message, String sentBy) {
+    public boolean showCopyOptions() {
+        return showCopyOptions;
+    }
+
+    public void setShowCopyOptions(boolean showCopyOptions) {
+        this.showCopyOptions = showCopyOptions;
+    }
+
+    public Message(String message, String sentBy, boolean showCopyOptions) {
         this.message = message;
         this.sentBy = sentBy;
+        this.showCopyOptions = showCopyOptions;
     }
 }

@@ -52,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
         //while loading second time(i.e chat instances, do not load messages with something went wrong)
 
 
-        messageList.add(new Message("Hi! How can I help you!", Message.SENT_BY_BOT));
-        messageList.add(new Message("Hi", Message.SENT_BY_ME));
+//        messageList.add(new Message("Hi! How can I help you!", Message.SENT_BY_BOT, false));
 
         messageAdapter = new MessageAdapter(this, messageList);
         binding.recyclerView.setAdapter(messageAdapter);
@@ -76,7 +75,11 @@ public class MainActivity extends AppCompatActivity {
 
     void addToChat(String message, String sentBy) {
         runOnUiThread(() -> {
-            messageList.add(new Message(message.trim(), sentBy));
+            if (sentBy == Message.SENT_BY_ME || message.equals("Something went wrong, please try again later.")) {
+                messageList.add(new Message(message.trim(), sentBy, false));
+            } else {
+                messageList.add(new Message(message.trim(), sentBy, true));
+            }
             messageAdapter.notifyDataSetChanged();
             binding.recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
         });
@@ -107,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        messageList.add(new Message("Typing... ", Message.SENT_BY_BOT));
+        messageList.add(new Message("Typing... ", Message.SENT_BY_BOT, false));
 
         RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
         Request request = new Request.Builder()
@@ -122,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("abc", e.toString());
                 Log.d("abc", e.getMessage());
                 addResponse("Something went wrong, please try again later.");
-                binding.bottomLayout.setVisibility(View.GONE);
+                runOnUiThread(() -> binding.bottomLayout.setVisibility(View.GONE));
             }
 
             @Override
@@ -135,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject message = jsonArray.getJSONObject(0).getJSONObject("message");
                         String result = message.getString("content");
                         addResponse(result.trim());
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
