@@ -18,6 +18,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "OPENAIKEY", "\"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\""
     }
 
     buildTypes {

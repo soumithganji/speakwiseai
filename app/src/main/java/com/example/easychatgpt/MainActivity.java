@@ -4,27 +4,17 @@ package com.example.easychatgpt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-
 import com.example.easychatgpt.databinding.ActivityMainBinding;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -55,13 +45,12 @@ public class MainActivity extends AppCompatActivity {
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .build();
 
-//        init();
 
         //while loading second time(i.e chat instances, do not load messages with something went wrong)
 
 
-//        messageList.add(new Message("Hi", Message.SENT_BY_ME));
         messageList.add(new Message("Hi! How can I help you!", Message.SENT_BY_BOT));
+        messageList.add(new Message("Hi", Message.SENT_BY_ME));
 
         messageAdapter = new MessageAdapter(messageList);
         binding.recyclerView.setAdapter(messageAdapter);
@@ -73,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
             String question = binding.messageEditText.getText().toString().trim();
             addToChat(question, Message.SENT_BY_ME);
             binding.messageEditText.setText("");
-            callAPI(question);
+            callAPI();
             binding.welcomeText.setVisibility(View.GONE);
         });
     }
 
     void addToChat(String message, String sentBy) {
         runOnUiThread(() -> {
-            messageList.add(new Message(message, sentBy));
+            messageList.add(new Message(message.trim(), sentBy));
             messageAdapter.notifyDataSetChanged();
             binding.recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
         });
@@ -91,13 +80,7 @@ public class MainActivity extends AppCompatActivity {
         addToChat(response, Message.SENT_BY_BOT);
     }
 
-    void callAPI(String question) {
-
-        HashMap<String, String> map = new HashMap<>();
-        map.put("content", question);
-        HashMap<String, String>[] myArray = new HashMap[1];
-        myArray[0] = map;
-
+    void callAPI() {
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("model", "gpt-3.5-turbo");
@@ -112,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             jsonBody.put("messages", messages);
-            jsonBody.put("max_tokens", 4000);
             jsonBody.put("temperature", 0);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -123,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/chat/completions")
-                .header("Authorization", "Bearer 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")
+                .header("Authorization", "Bearer " + BuildConfig.OPENAIKEY)
                 .post(body)
                 .build();
 
@@ -150,60 +132,13 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Log.d("abc", response.message().toString());
+                    Log.d("abc", response.message());
                     Log.d("abc", response.body().string());
                     addResponse("Something went wrong, please try again later.");
-                    binding.bottomLayout.setVisibility(View.GONE);
-                }
-            }
-        });
-
-
-    }
-
-    void init() {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .build();
-
-        Request request = new Request.Builder()
-                .url("https://api.openai.com/v1/chat/completions")
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", "Bearer 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")
-                .post(RequestBody.create(
-                        MediaType.parse("application/json"),
-                        "{\n" +
-                                "  \"model\": \"gpt-3.5-turbo\",\n" +
-                                "  \"messages\": [{\"role\": \"user\", \"content\": \"Can u write code!\"}],\n" +
-                                "  \"temperature\": 0.7\n" +
-                                "}"
-                ))
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                // Handle the failure
-                Log.d("abc", e.getMessage());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                // Handle the response
-                if (response.isSuccessful()) {
-                    String responseBody = response.body().string();
-                    // Do something with the response body
-                    Log.d("abc", responseBody.toString());
-
-                } else {
-                    // Handle the error response
-                    Log.d("abc", response.message());
+                    runOnUiThread(() -> binding.bottomLayout.setVisibility(View.GONE));
                 }
             }
         });
 
     }
-
-
 }

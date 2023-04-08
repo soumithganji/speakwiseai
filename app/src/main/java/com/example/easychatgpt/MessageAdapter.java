@@ -3,7 +3,9 @@ package com.example.easychatgpt;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,9 +47,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         return messageList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout botChatView, userChatView;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        RelativeLayout botChatView;
+        LinearLayout userChatView;
         TextView botTextView, userTextView;
+        ImageView imCopy, imShare;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,6 +59,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             userChatView = itemView.findViewById(R.id.user_chat_view);
             botTextView = itemView.findViewById(R.id.bot_chat_text_view);
             userTextView = itemView.findViewById(R.id.user_chat_text_view);
+            imCopy = itemView.findViewById(R.id.imCopy);
+            imShare = itemView.findViewById(R.id.imShare);
         }
     }
 }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/bot_chat_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,10 +14,30 @@
             android:id="@+id/bot_chat_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@+id/imCopy"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/imCopy"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_toStartOf="@+id/imShare"
+            android:background="@drawable/ic_copy"
+            android:backgroundTint="#ACACBD" />
+
+        <ImageView
+            android:id="@+id/imShare"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/ic_share"
+            android:backgroundTint="#ACACBD" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/user_chat_view"
@@ -25,7 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:background="@color/primary_dark_grey"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/user_chat_text_view"
