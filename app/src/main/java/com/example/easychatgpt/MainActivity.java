@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             jsonBody.put("messages", messages);
-            jsonBody.put("temperature", 0);
         } catch (JSONException e) {
             e.printStackTrace();
         }

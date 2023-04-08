@@ -28,40 +28,59 @@
         <RelativeLayout
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_corner"
-            android:backgroundTint="@color/primary_medium_grey"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/message_edit_text"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_toStartOf="@id/sendBtn"
-                android:background="@null"
-                android:hint="Ask me anything..."
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:textColor="@color/white"
-                android:textColorHint="#8E8E9F"
-                android:textCursorDrawable="@drawable/custom_cursor"
-                android:textSize="16sp" />
+                android:layout_height="80dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="16dp"
+                android:layout_toLeftOf="@+id/btnVoice"
+                android:background="@drawable/rounded_corner"
+                android:backgroundTint="@color/primary_medium_grey"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <EditText
+                    android:id="@+id/message_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toStartOf="@id/sendBtn"
+                    android:background="@null"
+                    android:hint="Ask me anything..."
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="#8E8E9F"
+                    android:textCursorDrawable="@drawable/custom_cursor"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/sendBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/ic_send"
+                    android:backgroundTint="#8E8E9F"
+                    tools:ignore="ContentDescription" />
+
+            </RelativeLayout>
 
             <ImageButton
-                android:id="@+id/sendBtn"
+                android:id="@+id/btnVoice"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/ic_send"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/ic_mic"
                 android:backgroundTint="#8E8E9F"
                 tools:ignore="ContentDescription" />
 
