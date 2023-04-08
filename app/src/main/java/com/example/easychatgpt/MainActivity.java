@@ -4,17 +4,23 @@ package com.example.easychatgpt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import com.example.easychatgpt.databinding.ActivityMainBinding;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -24,12 +30,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-
     List<Message> messageList;
     MessageAdapter messageAdapter;
-
     ActivityMainBinding binding;
-
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     OkHttpClient client;
 
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         messageList.add(new Message("Hi! How can I help you!", Message.SENT_BY_BOT));
         messageList.add(new Message("Hi", Message.SENT_BY_ME));
 
-        messageAdapter = new MessageAdapter(messageList);
+        messageAdapter = new MessageAdapter(this, messageList);
         binding.recyclerView.setAdapter(messageAdapter);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setStackFromEnd(true);
@@ -60,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.sendBtn.setOnClickListener((v) -> {
             String question = binding.messageEditText.getText().toString().trim();
+            if (question.isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Input cannot be empty!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             addToChat(question, Message.SENT_BY_ME);
             binding.messageEditText.setText("");
             callAPI();

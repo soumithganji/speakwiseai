@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_toStartOf="@id/send_btn"
+                android:layout_toStartOf="@id/sendBtn"
                 android:background="@null"
                 android:hint="Ask me anything..."
                 android:paddingLeft="5dp"
@@ -55,7 +55,7 @@
                 android:textSize="16sp" />
 
             <ImageButton
-                android:id="@+id/send_btn"
+                android:id="@+id/sendBtn"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_alignParentEnd="true"

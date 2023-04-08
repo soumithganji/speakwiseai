@@ -1,5 +1,11 @@
 package com.example.easychatgpt;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+
+import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,8 +22,10 @@ import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {
     List<Message> messageList;
+    Activity activity;
 
-    public MessageAdapter(List<Message> messageList) {
+    public MessageAdapter(Activity activity, List<Message> messageList) {
+        this.activity = activity;
         this.messageList = messageList;
     }
 
@@ -40,6 +49,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             holder.botChatView.setVisibility(View.VISIBLE);
             holder.botTextView.setText(message.getMessage());
         }
+
+        holder.imCopy.setOnClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("label", message.getMessage());
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(activity, "Copied to clipboard!", Toast.LENGTH_SHORT).show();
+        });
+
+        holder.imShare.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, message.getMessage());
+            activity.startActivity(Intent.createChooser(intent, "Share via"));
+        });
+
     }
 
     @Override
