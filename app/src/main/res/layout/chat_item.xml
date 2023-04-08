@@ -10,13 +10,21 @@
         android:background="@color/primary_light_grey"
         android:padding="16dp">
 
+        <ImageView
+            android:id="@+id/imLogo"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:background="@mipmap/ic_launcher" />
+
         <TextView
             android:id="@+id/bot_chat_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_toStartOf="@+id/llCopy"
+            android:layout_toEndOf="@+id/imLogo"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -45,7 +53,7 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/user_chat_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,13 +62,22 @@
         android:padding="16dp"
         android:visibility="gone">
 
+        <ImageView
+            android:id="@+id/imLogo1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:background="@null" />
+
         <TextView
             android:id="@+id/user_chat_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/imLogo1"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

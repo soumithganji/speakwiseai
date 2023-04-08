@@ -77,11 +77,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout botChatView;
+        RelativeLayout botChatView, userChatView;
         LinearLayout llCopy;
-        LinearLayout userChatView;
         TextView botTextView, userTextView;
-        ImageView imCopy, imShare;
+        ImageView imCopy, imShare, imLogo;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +91,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             imCopy = itemView.findViewById(R.id.imCopy);
             imShare = itemView.findViewById(R.id.imShare);
             llCopy = itemView.findViewById(R.id.llCopy);
+            imLogo = itemView.findViewById(R.id.imLogo);
         }
     }
 }
