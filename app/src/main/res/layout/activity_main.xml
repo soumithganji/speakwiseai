@@ -50,6 +50,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlFeedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp">
@@ -76,6 +77,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlRateApp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp">
@@ -102,6 +104,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlShareApp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp">
