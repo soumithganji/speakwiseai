@@ -62,8 +62,8 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         client = new OkHttpClient().newBuilder()
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(50, TimeUnit.SECONDS)
+                .writeTimeout(50, TimeUnit.SECONDS)
                 .build();
 
 

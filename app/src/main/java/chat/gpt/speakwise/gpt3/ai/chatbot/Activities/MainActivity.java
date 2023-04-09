@@ -27,12 +27,18 @@ public class MainActivity extends AppCompatActivity {
             window.setStatusBarColor(getColor(R.color.primary_black));
         }
 
+        binding.rlNewChat.setOnClickListener(v -> initNewChat());
+
         binding.rlRateApp.setOnClickListener(v -> initRateApp());
 
         binding.rlFeedback.setOnClickListener(v -> initFeedBack());
 
         binding.rlShareApp.setOnClickListener(v -> initShareApp());
 
+    }
+
+    private void initNewChat() {
+        startActivity(new Intent(this, ChatActivity.class));
     }
 
     private void initRateApp() {
