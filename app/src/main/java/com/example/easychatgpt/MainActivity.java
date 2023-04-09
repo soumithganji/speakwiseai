@@ -91,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding.sendBtn.setOnClickListener((v) -> {
             String question = binding.messageEditText.getText().toString().trim();
+            if (!messageList.isEmpty() && messageList.get(messageList.size() - 1).getMessage().equals("Typing...")) {
+                return;
+            }
             if (question.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Input cannot be empty!", Toast.LENGTH_SHORT).show();
                 return;
@@ -162,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        messageList.add(new Message("Typing... ", Message.SENT_BY_BOT, false));
+        messageList.add(new Message("Typing...", Message.SENT_BY_BOT, false));
 
         RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
         Request request = new Request.Builder()
