@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/primary_dark_grey"
-        tools:context=".MainActivity">
+        tools:context="chat.gpt.speakwise.gpt3.ai.chatbot.MainActivity">
 
         <TextView
             android:id="@+id/welcome_text"

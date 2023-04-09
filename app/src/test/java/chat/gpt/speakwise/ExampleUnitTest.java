@@ -1,4 +1,4 @@
-package com.example.easychatgpt;
+package chat.gpt.speakwise;
 
 import org.junit.Test;
 

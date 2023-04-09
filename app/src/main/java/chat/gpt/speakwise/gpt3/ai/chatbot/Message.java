@@ -1,4 +1,4 @@
-package com.example.easychatgpt;
+package chat.gpt.speakwise.gpt3.ai.chatbot;
 
 public class Message {
     public static String SENT_BY_ME = "user";

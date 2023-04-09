@@ -1,4 +1,4 @@
-package com.example.easychatgpt;
+package chat.gpt.speakwise.gpt3.ai.chatbot;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 

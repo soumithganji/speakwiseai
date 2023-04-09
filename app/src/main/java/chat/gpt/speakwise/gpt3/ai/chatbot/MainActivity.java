@@ -1,5 +1,5 @@
 
-package com.example.easychatgpt;
+package chat.gpt.speakwise.gpt3.ai.chatbot;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,19 +19,15 @@ import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import com.example.easychatgpt.databinding.ActivityMainBinding;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
-
+import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
