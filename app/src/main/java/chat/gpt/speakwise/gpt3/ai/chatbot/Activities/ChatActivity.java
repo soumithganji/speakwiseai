@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
     OkHttpClient client;
     Common common = Common.getInstance();
     String timeStamp = "";
+    boolean isChanged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +71,6 @@ public class ChatActivity extends AppCompatActivity {
                 .writeTimeout(50, TimeUnit.SECONDS)
                 .build();
 
-
-        //while loading second time(i.e chat instances, do not load messages with something went wrong or typing)
 
         initChatRecyclerView();
 
@@ -146,6 +146,14 @@ public class ChatActivity extends AppCompatActivity {
                 binding.messageEditText.setText(result.get(0));
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("isChanged", isChanged);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 
     void addToChat(String message, String sentBy) {
@@ -224,6 +232,7 @@ public class ChatActivity extends AppCompatActivity {
                         JSONArray jsonArray = jsonObject.getJSONArray("choices");
                         JSONObject message = jsonArray.getJSONObject(0).getJSONObject("message");
                         String result = message.getString("content");
+                        isChanged = true;
                         addResponse(result.trim());
                     } catch (Exception e) {
                         e.printStackTrace();

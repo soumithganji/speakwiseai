@@ -22,7 +22,6 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
     List<String> chatList;
     Activity activity;
-
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM hh:mm a");
 
     public ChatAdapter(Activity activity, List<String> chatList) {

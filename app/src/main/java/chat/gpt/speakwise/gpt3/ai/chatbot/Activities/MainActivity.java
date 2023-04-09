@@ -1,10 +1,13 @@
 package chat.gpt.speakwise.gpt3.ai.chatbot.Activities;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -37,6 +40,18 @@ public class MainActivity extends AppCompatActivity {
     String supportEmail = "speakwiseai@gmail.com";
     String appPlayStoreLink;
     Common common = Common.getInstance();
+
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    boolean isChanged = data.getBooleanExtra("isChanged", false);
+                    if (isChanged) {
+                        initChatRecyclerView();
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initNewChat() {
         Intent intent = new Intent(this, ChatActivity.class);
-        startActivity(intent);
+        activityResultLauncher.launch(intent);
     }
 
     private void initRateApp() {
