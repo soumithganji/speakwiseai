@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -51,6 +52,7 @@ public class ChatActivity extends AppCompatActivity {
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     OkHttpClient client;
     Common common = Common.getInstance();
+    String timeStamp = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,9 @@ public class ChatActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        timeStamp = getIntent().getStringExtra("timeStamp");
+        if (timeStamp == null) timeStamp = "";
 
         client = new OkHttpClient().newBuilder()
                 .readTimeout(50, TimeUnit.SECONDS)
@@ -86,12 +91,10 @@ public class ChatActivity extends AppCompatActivity {
         binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerView.setAdapter(messageAdapter);
 
-        Log.d("abc", common.getChats(this));
-
-        if (!common.getChats(this).isEmpty()) {
-            ArrayList<Message> tempList = new ArrayList<>(common.convertStringToObjectList(common.getChats(this)));
+        String chatString = common.getChats(this, timeStamp);
+        if (!chatString.isEmpty()) {
+            ArrayList<Message> tempList = new ArrayList<>(common.convertStringToObjectList(chatString));
             messageList.addAll(tempList);
-            Log.d("abc", "" + tempList);
         }
     }
 
@@ -166,10 +169,15 @@ public class ChatActivity extends AppCompatActivity {
         if (!response.equals("Something went wrong, please try again later.")) {
             List<Message> tempList = new ArrayList<>(messageList);
             tempList.add(new Message(response, Message.SENT_BY_BOT, true));
-            //save all data from tempList to this instance
-            common.saveChats(this, common.convertObjectListToString(tempList));
-        }
 
+            String date = "" + (new Date()).getTime();
+            if (!timeStamp.isEmpty()) {
+                date = timeStamp;
+            } else {
+                common.saveTimeStamp(this, date);
+            }
+            common.saveChats(this, common.convertObjectListToString(tempList), date);
+        }
         addToChat(response, Message.SENT_BY_BOT);
     }
 

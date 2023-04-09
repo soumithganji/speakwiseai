@@ -45,14 +45,14 @@ public class Common {
         return isOnline;
     }
 
-    public String getChats(Activity activity) {
+    public String getChats(Activity activity, String timeStamp) {
         SharedPreferences prefs = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
-        return prefs.getString("chats", "");
+        return prefs.getString("chats_" + timeStamp, "");
     }
 
-    public void saveChats(Activity activity, String chats) {
+    public void saveChats(Activity activity, String chats, String timeStamp) {
         SharedPreferences.Editor editor = activity.getSharedPreferences("speakwise", MODE_PRIVATE).edit();
-        editor.putString("chats", chats);
+        editor.putString("chats_" + timeStamp, chats);
         editor.apply();
     }
 
@@ -69,4 +69,19 @@ public class Common {
     }
 
 
+    public void saveTimeStamp(Activity activity, String date) {
+        SharedPreferences prefs = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
+        String dateString = prefs.getString("list", "");
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+
+        ArrayList<String> list = gson.fromJson(dateString, type);
+        if(list == null) list = new ArrayList<>();
+        list.add(date);
+
+        SharedPreferences.Editor editor = activity.getSharedPreferences("speakwise", MODE_PRIVATE).edit();
+        editor.putString("list", gson.toJson(list));
+        editor.apply();
+    }
 }

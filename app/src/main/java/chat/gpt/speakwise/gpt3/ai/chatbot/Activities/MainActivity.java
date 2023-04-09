@@ -2,18 +2,22 @@ package chat.gpt.speakwise.gpt3.ai.chatbot.Activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
+
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
+
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
@@ -80,7 +84,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initNewChat() {
-        startActivity(new Intent(this, ChatActivity.class));
+        Intent intent = new Intent(this, ChatActivity.class);
+//        intent.putExtra("timeStamp", "1681042693773");
+        startActivity(intent);
     }
 
     private void initRateApp() {
