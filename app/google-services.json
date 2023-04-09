@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1033410938025",
+    "project_id": "speakwise-ai",
+    "storage_bucket": "speakwise-ai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033410938025:android:c5ddc7385bfac0aa6495b8",
+        "android_client_info": {
+          "package_name": "chat.gpt.speakwise.gpt3.ai.chatbot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033410938025-veag1ejb2biu29q78loujless4gbqos6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkVH-aqjQFgsSPJmqaxALNlZ-8Lsi-k08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033410938025-veag1ejb2biu29q78loujless4gbqos6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
