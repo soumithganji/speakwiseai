@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 import chat.gpt.speakwise.gpt3.ai.chatbot.BuildConfig;
 import chat.gpt.speakwise.gpt3.ai.chatbot.Models.Message;
 import chat.gpt.speakwise.gpt3.ai.chatbot.Adapters.MessageAdapter;
+import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityChatBinding;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -49,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
     MessageAdapter messageAdapter;
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     OkHttpClient client;
+    Common common = Common.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (!hasInternetConnection()) {
+        if (!common.hasInternetConnection(this)) {
             Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -96,7 +98,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage() {
-        if (!hasInternetConnection()) {
+        if (!common.hasInternetConnection(this)) {
             Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -167,6 +169,9 @@ public class ChatActivity extends AppCompatActivity {
                 message.put("role", m.getSentBy());
                 message.put("content", m.getMessage());
                 messages.put(message);
+
+                // each iteration, save bot and user messages to local, overriding the last ones of this particular instance
+
             }
             jsonBody.put("temperature", 0.7);
             jsonBody.put("messages", messages);
@@ -216,22 +221,6 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    public boolean hasInternetConnection() {
-        boolean isOnline = false;
-        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        try {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                NetworkCapabilities capabilities = manager.getNetworkCapabilities(manager.getActiveNetwork());
-                isOnline = capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
-            } else {
-                NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
-                isOnline = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return isOnline;
-    }
 
     private void startSpeechToText() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);

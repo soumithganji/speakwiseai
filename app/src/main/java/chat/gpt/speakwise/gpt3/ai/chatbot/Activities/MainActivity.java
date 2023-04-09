@@ -15,12 +15,14 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
+import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     String supportEmail = "speakwiseai@gmail.com";
     String appPlayStoreLink;
+    Common common = Common.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
         binding.rlFeedback.setOnClickListener(v -> initFeedBack());
 
         binding.rlShareApp.setOnClickListener(v -> initShareApp());
+
+        if (!common.hasInternetConnection(this)) {
+            Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         //see if the particular release is mandatory or not from backend
         checkAppUpdate();
