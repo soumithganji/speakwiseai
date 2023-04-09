@@ -3,6 +3,7 @@ package com.example.easychatgpt;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
@@ -58,16 +59,17 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
 
-        //while loading second time(i.e chat instances, do not load messages with something went wrong)
+        //while loading second time(i.e chat instances, do not load messages with something went wrong or typing)
 
 
 //        messageList.add(new Message("Hi! How can I help you!", Message.SENT_BY_BOT, false));
 
-        messageAdapter = new MessageAdapter(this, messageList);
-        binding.recyclerView.setAdapter(messageAdapter);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setStackFromEnd(true);
         binding.recyclerView.setLayoutManager(llm);
+        messageAdapter = new MessageAdapter(this, messageList);
+        binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerView.setAdapter(messageAdapter);
 
         binding.sendBtn.setOnClickListener((v) -> {
             String question = binding.messageEditText.getText().toString().trim();
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 message.put("content", m.getMessage());
                 messages.put(message);
             }
-
+            jsonBody.put("temperature", 0.7);
             jsonBody.put("messages", messages);
         } catch (JSONException e) {
             e.printStackTrace();
