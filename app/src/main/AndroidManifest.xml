@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWiseAI"
         tools:targetApi="31">
+
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true">
@@ -25,9 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Activities.ChatActivity"
             android:exported="true" />
+
     </application>
 
 </manifest>
