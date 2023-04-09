@@ -2,8 +2,11 @@ package chat.gpt.speakwise.gpt3.ai.chatbot.Activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +20,14 @@ import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import chat.gpt.speakwise.gpt3.ai.chatbot.Adapters.ChatAdapter;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
@@ -49,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.rlShareApp.setOnClickListener(v -> initShareApp());
 
+        //render rv from list from shared prefs of timestamp
+
+        initChatRecyclerView();
+
         if (!common.hasInternetConnection(this)) {
             Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
             return;
@@ -56,6 +70,31 @@ public class MainActivity extends AppCompatActivity {
 
         //see if the particular release is mandatory or not from backend
         checkAppUpdate();
+    }
+
+    private void initChatRecyclerView() {
+        SharedPreferences prefs = getSharedPreferences("speakwise", MODE_PRIVATE);
+        String dateString = prefs.getString("list", "");
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+
+        ArrayList<String> list = gson.fromJson(dateString, type);
+
+        if (list == null) return;
+
+        Collections.sort(list, (timestamp1, timestamp2) -> {
+            long t1 = Long.parseLong(timestamp1);
+            long t2 = Long.parseLong(timestamp2);
+            return Long.compare(t2, t1);
+        });
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setStackFromEnd(true);
+        binding.recyclerView.setLayoutManager(llm);
+        ChatAdapter chatAdapter = new ChatAdapter(this, list);
+        binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
+        binding.recyclerView.setAdapter(chatAdapter);
     }
 
     private void checkAppUpdate() {
@@ -85,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initNewChat() {
         Intent intent = new Intent(this, ChatActivity.class);
-//        intent.putExtra("timeStamp", "1681042693773");
         startActivity(intent);
     }
 

@@ -7,12 +7,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
@@ -93,6 +89,7 @@ public class ChatActivity extends AppCompatActivity {
 
         String chatString = common.getChats(this, timeStamp);
         if (!chatString.isEmpty()) {
+            binding.welcomeText.setVisibility(View.GONE);
             ArrayList<Message> tempList = new ArrayList<>(common.convertStringToObjectList(chatString));
             messageList.addAll(tempList);
         }

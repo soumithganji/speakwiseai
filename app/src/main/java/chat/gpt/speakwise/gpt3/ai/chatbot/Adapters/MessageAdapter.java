@@ -33,7 +33,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View chatView = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item, null);
+        View chatView = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_item, null);
         MyViewHolder myViewHolder = new MyViewHolder(chatView);
         return myViewHolder;
     }
