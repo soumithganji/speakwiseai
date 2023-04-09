@@ -3,10 +3,8 @@ package chat.gpt.speakwise.gpt3.ai.chatbot.Models;
 public class Message {
     public static String SENT_BY_ME = "user";
     public static String SENT_BY_BOT = "assistant";
-
     private String message;
     private String sentBy;
-
     private boolean showCopyOptions;
 
     public String getMessage() {
