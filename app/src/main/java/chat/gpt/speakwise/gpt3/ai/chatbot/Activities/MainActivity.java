@@ -71,16 +71,19 @@ public class MainActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("config").document("speakwiseai");
 
-        docRef.get().addOnSuccessListener((OnSuccessListener<DocumentSnapshot>) documentSnapshot -> {
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            binding.spinKit.setVisibility(View.GONE);
             if (documentSnapshot.exists()) {
                 long free_max_tokens = documentSnapshot.getLong("free_max_tokens");
                 boolean free_unlimited_tokens = documentSnapshot.getBoolean("free_unlimited_tokens");
                 long temperature = documentSnapshot.getLong("temperature");
+                //do null check for top 3 fields
                 init();
             } else {
                 Toast.makeText(getApplicationContext(), "Something Went Wrong. Please Try Again Later", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(e -> {
+            binding.spinKit.setVisibility(View.GONE);
             if (!common.hasInternetConnection(this)) {
                 Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
             } else {
