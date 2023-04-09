@@ -85,6 +85,14 @@ public class ChatActivity extends AppCompatActivity {
         messageAdapter = new MessageAdapter(this, messageList);
         binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerView.setAdapter(messageAdapter);
+
+        Log.d("abc", common.getChats(this));
+
+        if (!common.getChats(this).isEmpty()) {
+            ArrayList<Message> tempList = new ArrayList<>(common.convertStringToObjectList(common.getChats(this)));
+            messageList.addAll(tempList);
+            Log.d("abc", "" + tempList);
+        }
     }
 
     private void initTextToSpeech() {
@@ -154,6 +162,14 @@ public class ChatActivity extends AppCompatActivity {
 
     void addResponse(String response) {
         messageList.remove(messageList.size() - 1);
+
+        if (!response.equals("Something went wrong, please try again later.")) {
+            List<Message> tempList = new ArrayList<>(messageList);
+            tempList.add(new Message(response, Message.SENT_BY_BOT, true));
+            //save all data from tempList to this instance
+            common.saveChats(this, common.convertObjectListToString(tempList));
+        }
+
         addToChat(response, Message.SENT_BY_BOT);
     }
 
@@ -169,9 +185,6 @@ public class ChatActivity extends AppCompatActivity {
                 message.put("role", m.getSentBy());
                 message.put("content", m.getMessage());
                 messages.put(message);
-
-                // each iteration, save bot and user messages to local, overriding the last ones of this particular instance
-
             }
             jsonBody.put("temperature", 0.7);
             jsonBody.put("messages", messages);
@@ -220,7 +233,6 @@ public class ChatActivity extends AppCompatActivity {
         });
 
     }
-
 
     private void startSpeechToText() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
