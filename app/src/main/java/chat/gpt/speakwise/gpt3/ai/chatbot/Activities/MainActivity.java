@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRateApp() {
         Uri webUri = Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName());
-        Intent webRateIntent = new Intent(Intent.ACTION_VIEW, webUri);
-        startActivity(webRateIntent);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webUri);
+        startActivity(intent);
     }
 
     private void initShareApp() {
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                     "mailto", supportEmail, null));
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Email subject");
             emailIntent.putExtra(Intent.EXTRA_TEXT, "Email body");
-
             startActivity(Intent.createChooser(emailIntent, "Send email"));
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Contact " + supportEmail, Toast.LENGTH_SHORT).show();
