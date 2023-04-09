@@ -18,11 +18,15 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -64,6 +68,28 @@ public class MainActivity extends AppCompatActivity {
             window.setStatusBarColor(getColor(R.color.primary_black));
         }
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("config").document("speakwiseai");
+
+        docRef.get().addOnSuccessListener((OnSuccessListener<DocumentSnapshot>) documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                long free_max_tokens = documentSnapshot.getLong("free_max_tokens");
+                boolean free_unlimited_tokens = documentSnapshot.getBoolean("free_unlimited_tokens");
+                long temperature = documentSnapshot.getLong("temperature");
+                init();
+            } else {
+                Toast.makeText(getApplicationContext(), "Something Went Wrong. Please Try Again Later", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(e -> {
+            if (!common.hasInternetConnection(this)) {
+                Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Something Went Wrong. Please Try Again Later", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void init() {
         appPlayStoreLink = "https://play.google.com/store/apps/details?id=" + getPackageName();
 
         binding.rlNewChat.setOnClickListener(v -> initNewChat());
@@ -74,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding.rlShareApp.setOnClickListener(v -> initShareApp());
 
-        //render rv from list from shared prefs of timestamp
-
         initChatRecyclerView();
 
         if (!common.hasInternetConnection(this)) {
@@ -83,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        //see if the particular release is mandatory or not from backend
         checkAppUpdate();
     }
 
