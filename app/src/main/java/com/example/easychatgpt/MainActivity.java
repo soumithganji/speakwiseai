@@ -5,6 +5,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         messageList = new ArrayList<>();
+
+        if (!hasInternetConnection()) {
+            Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         client = new OkHttpClient().newBuilder()
                 .readTimeout(30, TimeUnit.SECONDS)
@@ -150,4 +159,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public boolean hasInternetConnection() {
+        boolean isOnline = false;
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                NetworkCapabilities capabilities = manager.getNetworkCapabilities(manager.getActiveNetwork());
+                isOnline = capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+            } else {
+                NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
+                isOnline = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isOnline;
+    }
+
 }
