@@ -1,4 +1,4 @@
-package chat.gpt.speakwise.gpt3.ai.chatbot;
+package chat.gpt.speakwise.gpt3.ai.chatbot.Adapters;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -18,6 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import chat.gpt.speakwise.gpt3.ai.chatbot.Models.Message;
+import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {
     List<Message> messageList;

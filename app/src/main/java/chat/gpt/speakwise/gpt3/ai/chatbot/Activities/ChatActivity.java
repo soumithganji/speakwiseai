@@ -1,4 +1,4 @@
-package chat.gpt.speakwise.gpt3.ai.chatbot;
+package chat.gpt.speakwise.gpt3.ai.chatbot.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +29,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
+import chat.gpt.speakwise.gpt3.ai.chatbot.BuildConfig;
+import chat.gpt.speakwise.gpt3.ai.chatbot.Models.Message;
+import chat.gpt.speakwise.gpt3.ai.chatbot.Adapters.MessageAdapter;
+import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityChatBinding;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -38,19 +41,19 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
+    ActivityChatBinding binding;
     private static final int REQUEST_CODE_SPEECH_INPUT = 100;
     private static final int REQUEST_CODE_PERMISSION = 200;
     List<Message> messageList = new ArrayList<>();
     MessageAdapter messageAdapter;
-    ActivityMainBinding binding;
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     OkHttpClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         if (!hasInternetConnection()) {

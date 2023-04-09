@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
@@ -16,9 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWiseAI"
         tools:targetApi="31">
-
         <activity
-            android:name="chat.gpt.speakwise.gpt3.ai.chatbot.MainActivity"
+            android:name=".Activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".Activities.ChatActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
