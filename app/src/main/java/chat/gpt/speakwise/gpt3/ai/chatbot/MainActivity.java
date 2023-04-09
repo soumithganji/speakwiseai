@@ -1,4 +1,3 @@
-
 package chat.gpt.speakwise.gpt3.ai.chatbot;
 
 import androidx.annotation.NonNull;
@@ -19,14 +18,17 @@ import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -39,7 +41,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SPEECH_INPUT = 100;
     private static final int REQUEST_CODE_PERMISSION = 200;
-    List<Message> messageList;
+    List<Message> messageList = new ArrayList<>();
     MessageAdapter messageAdapter;
     ActivityMainBinding binding;
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
@@ -50,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        messageList = new ArrayList<>();
 
         if (!hasInternetConnection()) {
             Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
@@ -65,45 +66,54 @@ public class MainActivity extends AppCompatActivity {
 
         //while loading second time(i.e chat instances, do not load messages with something went wrong or typing)
 
+        initChatRecyclerView();
 
-//        messageList.add(new Message("Hi! How can I help you!", Message.SENT_BY_BOT, false));
+        binding.btnVoice.setOnClickListener(v -> initTextToSpeech());
 
+        binding.sendBtn.setOnClickListener((v) -> sendMessage());
+    }
+
+    private void initChatRecyclerView() {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setStackFromEnd(true);
         binding.recyclerView.setLayoutManager(llm);
         messageAdapter = new MessageAdapter(this, messageList);
         binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerView.setAdapter(messageAdapter);
+    }
 
-        binding.btnVoice.setOnClickListener(v -> {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.RECORD_AUDIO},
-                        REQUEST_CODE_PERMISSION);
-            } else {
-                startSpeechToText();
-            }
-        });
+    private void initTextToSpeech() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.RECORD_AUDIO},
+                    REQUEST_CODE_PERMISSION);
+        } else {
+            startSpeechToText();
+        }
+    }
 
-        binding.sendBtn.setOnClickListener((v) -> {
-            String question = binding.messageEditText.getText().toString().trim();
-            if (!messageList.isEmpty() && messageList.get(messageList.size() - 1).getMessage().equals("Typing...")) {
-                return;
-            }
-            if (question.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Input cannot be empty!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            addToChat(question, Message.SENT_BY_ME);
-            binding.messageEditText.setText("");
-            callAPI();
-            binding.welcomeText.setVisibility(View.GONE);
-        });
+    private void sendMessage() {
+        if (!hasInternetConnection()) {
+            Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String question = binding.messageEditText.getText().toString().trim();
+        if (!messageList.isEmpty() && messageList.get(messageList.size() - 1).getMessage().equals("Typing...")) {
+            return;
+        }
+        if (question.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Input cannot be empty!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        addToChat(question, Message.SENT_BY_ME);
+        binding.messageEditText.setText("");
+        callAPI();
+        binding.welcomeText.setVisibility(View.GONE);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

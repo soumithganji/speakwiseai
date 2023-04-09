@@ -22,7 +22,6 @@ import java.util.List;
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {
     List<Message> messageList;
     Activity activity;
-
     public MessageAdapter(Activity activity, List<Message> messageList) {
         this.activity = activity;
         this.messageList = messageList;
