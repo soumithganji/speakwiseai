@@ -15,7 +15,8 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentStart="true"
-            android:background="@mipmap/ic_launcher" />
+            android:layout_centerVertical="true"
+            android:src="@drawable/logo_vector_small" />
 
         <TextView
             android:id="@+id/bot_chat_text_view"
