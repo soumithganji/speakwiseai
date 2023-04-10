@@ -11,10 +11,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.json.JSONArray;
@@ -59,6 +61,8 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        initBannerChat();
+
         if (!common.hasInternetConnection(this)) {
             Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
             return;
@@ -78,6 +82,14 @@ public class ChatActivity extends AppCompatActivity {
         binding.btnVoice.setOnClickListener(v -> initTextToSpeech());
 
         binding.sendBtn.setOnClickListener((v) -> sendMessage());
+    }
+
+    private void initBannerChat() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
+
+        Handler handler = new Handler();
+        handler.postDelayed(this::initBannerChat, 30000);
     }
 
     private void initChatRecyclerView() {
