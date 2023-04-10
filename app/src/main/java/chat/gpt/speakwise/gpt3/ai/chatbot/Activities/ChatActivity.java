@@ -16,7 +16,12 @@ import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.json.JSONArray;
@@ -54,6 +59,11 @@ public class ChatActivity extends AppCompatActivity {
     Common common = Common.getInstance();
     String timeStamp = "";
     boolean isChanged = false;
+    InterstitialAd interstitialAd;
+    private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
+
+    private Handler handlerFullScreen;
+    private Handler handlerBanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +71,10 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        handlerFullScreen = new Handler();
+        handlerBanner = new Handler();
+
+        loadFullScreenAd();
         initBannerChat();
 
         if (!common.hasInternetConnection(this)) {
@@ -84,12 +98,17 @@ public class ChatActivity extends AppCompatActivity {
         binding.sendBtn.setOnClickListener((v) -> sendMessage());
     }
 
+    private void loadFullScreenAd() {
+        loadInterstitialAd();
+
+        handlerFullScreen.postDelayed(this::loadFullScreenAd, 30000);
+    }
+
     private void initBannerChat() {
         AdRequest adRequest = new AdRequest.Builder().build();
         binding.adView.loadAd(adRequest);
 
-        Handler handler = new Handler();
-        handler.postDelayed(this::initBannerChat, 30000);
+        handlerBanner.postDelayed(this::initBannerChat, 30000);
     }
 
     private void initChatRecyclerView() {
@@ -268,6 +287,63 @@ public class ChatActivity extends AppCompatActivity {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak something...");
         startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
+    }
+
+    public void loadInterstitialAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(
+                this,
+                AD_UNIT_ID,
+                adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        ChatActivity.this.interstitialAd = interstitialAd;
+                        ChatActivity.this.interstitialAd.show(ChatActivity.this);
+                        ChatActivity.this.interstitialAd.setFullScreenContentCallback(
+                                new FullScreenContentCallback() {
+                                    @Override
+                                    public void onAdDismissedFullScreenContent() {
+                                        // Called when fullscreen content is dismissed.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        ChatActivity.this.interstitialAd = null;
+                                    }
+
+                                    @Override
+                                    public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                        // Called when fullscreen content failed to show.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        ChatActivity.this.interstitialAd = null;
+                                    }
+
+                                    @Override
+                                    public void onAdShowedFullScreenContent() {
+                                        // Called when fullscreen content is shown.
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        interstitialAd = null;
+
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (interstitialAd != null) {
+            interstitialAd.setFullScreenContentCallback(null);
+        }
+        handlerFullScreen.removeCallbacksAndMessages(null);
+        handlerBanner.removeCallbacksAndMessages(null);
     }
 
 }
