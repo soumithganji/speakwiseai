@@ -20,12 +20,39 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.Models.Message;
 
 public class Common {
     private static Common single_instance = null;
+    private static long free_max_tokens = 3000;
+    private static boolean free_unlimited_tokens = false;
+    private static double temperature = 0.7;
 
     public static Common getInstance() {
         if (single_instance == null)
             single_instance = new Common();
 
         return single_instance;
+    }
+
+    public long getFree_max_tokens() {
+        return free_max_tokens;
+    }
+
+    public void setFree_max_tokens(long free_max_tokens) {
+        Common.free_max_tokens = free_max_tokens;
+    }
+
+    public boolean isFree_unlimited_tokens() {
+        return free_unlimited_tokens;
+    }
+
+    public void setFree_unlimited_tokens(boolean free_unlimited_tokens) {
+        Common.free_unlimited_tokens = free_unlimited_tokens;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(double temperature) {
+        Common.temperature = temperature;
     }
 
     public boolean hasInternetConnection(Activity activity) {
@@ -74,10 +101,11 @@ public class Common {
         String dateString = prefs.getString("list", "");
 
         Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
 
         ArrayList<String> list = gson.fromJson(dateString, type);
-        if(list == null) list = new ArrayList<>();
+        if (list == null) list = new ArrayList<>();
         list.add(date);
 
         SharedPreferences.Editor editor = activity.getSharedPreferences("speakwise", MODE_PRIVATE).edit();

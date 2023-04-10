@@ -12,9 +12,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -199,9 +200,13 @@ public class ChatActivity extends AppCompatActivity {
                 message.put("content", m.getMessage());
                 messages.put(message);
             }
-            jsonBody.put("temperature", 0.7);
+            jsonBody.put("temperature", common.getTemperature());
             jsonBody.put("messages", messages);
+            if (!common.isFree_unlimited_tokens()) {
+                jsonBody.put("max_tokens", common.getFree_max_tokens());
+            }
         } catch (JSONException e) {
+            FirebaseCrashlytics.getInstance().log(e.toString());
             e.printStackTrace();
         }
 
@@ -217,8 +222,7 @@ public class ChatActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d("abc", e.toString());
-                Log.d("abc", e.getMessage());
+                FirebaseCrashlytics.getInstance().log(e.toString());
                 addResponse("Something went wrong, please try again later.");
                 runOnUiThread(() -> binding.bottomLayout.setVisibility(View.GONE));
             }
@@ -238,8 +242,7 @@ public class ChatActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Log.d("abc", response.message());
-                    Log.d("abc", response.body().string());
+                    FirebaseCrashlytics.getInstance().log(response.message());
                     addResponse("Something went wrong, please try again later.");
                     runOnUiThread(() -> binding.bottomLayout.setVisibility(View.GONE));
                 }

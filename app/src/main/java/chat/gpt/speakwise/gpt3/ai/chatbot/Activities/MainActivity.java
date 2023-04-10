@@ -74,10 +74,24 @@ public class MainActivity extends AppCompatActivity {
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             binding.spinKit.setVisibility(View.GONE);
             if (documentSnapshot.exists()) {
-                long free_max_tokens = documentSnapshot.getLong("free_max_tokens");
-                boolean free_unlimited_tokens = documentSnapshot.getBoolean("free_unlimited_tokens");
-                long temperature = documentSnapshot.getLong("temperature");
-                //do null check for top 3 fields
+                try {
+                    long free_max_tokens = documentSnapshot.getLong("free_max_tokens");
+                    common.setFree_max_tokens(free_max_tokens);
+                } catch (Exception e) {
+
+                }
+                try {
+                    boolean free_unlimited_tokens = documentSnapshot.getBoolean("free_unlimited_tokens");
+                    common.setFree_unlimited_tokens(free_unlimited_tokens);
+                } catch (Exception e) {
+
+                }
+                try {
+                    double temperature = documentSnapshot.getDouble("temperature");
+                    common.setTemperature(temperature);
+                } catch (Exception e) {
+
+                }
 
                 HashMap<String, String> manditoryUpdateMap = (HashMap<String, String>) documentSnapshot.get("manditoryUpdatesMap");
                 init(manditoryUpdateMap);
