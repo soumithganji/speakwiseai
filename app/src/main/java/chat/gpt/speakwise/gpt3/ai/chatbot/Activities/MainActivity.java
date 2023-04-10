@@ -18,14 +18,12 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,8 +31,10 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 import chat.gpt.speakwise.gpt3.ai.chatbot.Adapters.ChatAdapter;
+import chat.gpt.speakwise.gpt3.ai.chatbot.BuildConfig;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
@@ -78,7 +78,9 @@ public class MainActivity extends AppCompatActivity {
                 boolean free_unlimited_tokens = documentSnapshot.getBoolean("free_unlimited_tokens");
                 long temperature = documentSnapshot.getLong("temperature");
                 //do null check for top 3 fields
-                init();
+
+                HashMap<String, String> manditoryUpdateMap = (HashMap<String, String>) documentSnapshot.get("manditoryUpdatesMap");
+                init(manditoryUpdateMap);
             } else {
                 Toast.makeText(getApplicationContext(), "Something Went Wrong. Please Try Again Later", Toast.LENGTH_SHORT).show();
             }
@@ -92,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void init() {
+    private void init(HashMap<String, String> manditoryUpdateMap) {
         appPlayStoreLink = "https://play.google.com/store/apps/details?id=" + getPackageName();
 
         binding.rlNewChat.setOnClickListener(v -> initNewChat());
@@ -110,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        checkAppUpdate();
+        checkAppUpdate(manditoryUpdateMap);
     }
 
     private void initChatRecyclerView() {
@@ -138,17 +140,17 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.setAdapter(chatAdapter);
     }
 
-    private void checkAppUpdate() {
+    private void checkAppUpdate(HashMap<String, String> manditoryUpdateMap) {
         AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(getApplicationContext());
         Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
         appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                showUpdateDialog();
+                showUpdateDialog(manditoryUpdateMap);
             }
         });
     }
 
-    private void showUpdateDialog() {
+    private void showUpdateDialog(HashMap<String, String> manditoryUpdateMap) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View customView = getLayoutInflater().inflate(R.layout.app_update_dialog, null);
         builder.setView(customView);
@@ -158,7 +160,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(browserIntent);
         });
 
-//        builder.setCancelable(false);
+        if (manditoryUpdateMap.containsValue(String.valueOf(BuildConfig.VERSION_CODE))) {
+            builder.setCancelable(false);
+        }
 
         builder.show();
     }
