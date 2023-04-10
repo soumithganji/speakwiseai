@@ -16,6 +16,7 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.play.core.appupdate.AppUpdateInfo;
@@ -74,6 +75,13 @@ public class MainActivity extends AppCompatActivity {
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             binding.spinKit.setVisibility(View.GONE);
             if (documentSnapshot.exists()) {
+                boolean block_free_users = documentSnapshot.getBoolean("block_free_users");
+
+                if (block_free_users) {
+                    showBlockedDialog();
+                    return;
+                }
+
                 try {
                     long free_max_tokens = documentSnapshot.getLong("free_max_tokens");
                     common.setFree_max_tokens(free_max_tokens);
@@ -106,6 +114,22 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Something Went Wrong. Please Try Again Later", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showBlockedDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View customView = getLayoutInflater().inflate(R.layout.app_update_dialog, null);
+        builder.setView(customView);
+
+        ((TextView)customView.findViewById(R.id.dialog_title)).setText("Oops!");
+
+        ((TextView)customView.findViewById(R.id.dialog_message)).setText("We're temporarily down. Hold tight! We will be back as soon as we can.");
+
+        customView.findViewById(R.id.llBottom).setVisibility(View.GONE);
+
+        builder.setCancelable(false);
+
+        builder.show();
     }
 
     private void init(HashMap<String, String> manditoryUpdateMap) {
