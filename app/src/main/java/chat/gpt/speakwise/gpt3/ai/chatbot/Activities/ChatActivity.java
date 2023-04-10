@@ -193,7 +193,6 @@ public class ChatActivity extends AppCompatActivity {
             jsonBody.put("model", "gpt-3.5-turbo");
 
             JSONArray messages = new JSONArray();
-
             for (Message m : messageList) {
                 JSONObject message = new JSONObject();
                 message.put("role", m.getSentBy());
