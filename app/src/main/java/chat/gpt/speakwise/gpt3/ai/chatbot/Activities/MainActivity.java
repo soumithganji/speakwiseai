@@ -121,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
         View customView = getLayoutInflater().inflate(R.layout.app_update_dialog, null);
         builder.setView(customView);
 
-        ((TextView)customView.findViewById(R.id.dialog_title)).setText("Oops!");
+        ((TextView) customView.findViewById(R.id.dialog_title)).setText("Oops!");
 
-        ((TextView)customView.findViewById(R.id.dialog_message)).setText("We're temporarily down. Hold tight! We will be back as soon as we can.");
+        ((TextView) customView.findViewById(R.id.dialog_message)).setText("We're temporarily down. Hold tight! We will be back as soon as we can.");
 
         customView.findViewById(R.id.llBottom).setVisibility(View.GONE);
 
