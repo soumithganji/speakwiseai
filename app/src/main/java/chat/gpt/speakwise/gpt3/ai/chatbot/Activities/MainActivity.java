@@ -57,7 +57,7 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
-    String supportEmail = "speakwiseai@gmail.com";
+    String supportEmail = "chat.speakwiseai@gmail.com";
     String appPlayStoreLink;
     Common common = Common.getInstance();
 
