@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.os.Handler;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,6 +17,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import chat.gpt.speakwise.gpt3.ai.chatbot.CallBacks.OnPreferencesClearedListener;
 import chat.gpt.speakwise.gpt3.ai.chatbot.Models.Message;
 
 public class Common {
@@ -81,6 +83,15 @@ public class Common {
         SharedPreferences.Editor editor = activity.getSharedPreferences("speakwise", MODE_PRIVATE).edit();
         editor.putString("chats_" + timeStamp, chats);
         editor.apply();
+    }
+
+    public void deleteAllChats(Activity activity, OnPreferencesClearedListener listener) {
+        SharedPreferences preferences = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+
+        new Handler().post(listener::onPreferencesCleared);
     }
 
     public String convertObjectListToString(List<Message> objectList) {

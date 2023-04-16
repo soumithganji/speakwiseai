@@ -170,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
 
         binding.rlShareApp.setOnClickListener(v -> initShareApp());
 
+        binding.rlClearChats.setOnClickListener(v -> showDeleteAllChatsDialog());
+
         initChatRecyclerView();
 
         if (!common.hasInternetConnection(this)) {
@@ -189,7 +191,16 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<String> list = gson.fromJson(dateString, type);
 
-        if (list == null) return;
+        if (list == null) {
+            LinearLayoutManager llm = new LinearLayoutManager(this);
+            llm.setStackFromEnd(true);
+            binding.recyclerView.setLayoutManager(llm);
+            ChatAdapter chatAdapter = new ChatAdapter(this, new ArrayList<>());
+            binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
+            binding.recyclerView.setAdapter(chatAdapter);
+
+            return;
+        }
 
         Collections.sort(list, (timestamp1, timestamp2) -> {
             long t1 = Long.parseLong(timestamp1);
@@ -220,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         View customView = getLayoutInflater().inflate(R.layout.app_update_dialog, null);
         builder.setView(customView);
 
-        customView.findViewById(R.id.cwUpdateNow).setOnClickListener(v -> {
+        customView.findViewById(R.id.cwYes).setOnClickListener(v -> {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(appPlayStoreLink));
             startActivity(browserIntent);
         });
@@ -244,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initShareApp() {
-        String message = "Check out SpeakWise - a free AI chatbot app powered by GPT-3!" +
+        String message = "Check out SpeakWise AI- a free AI chatbot app powered by GPT-3!" +
                 " Perfect for interesting conversations on any topic." +
                 " Download it for free on the Google Play Store and share with your friends!\n" +
                 appPlayStoreLink;
@@ -265,6 +276,25 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Contact " + supportEmail, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showDeleteAllChatsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View customView = getLayoutInflater().inflate(R.layout.app_update_dialog, null);
+        builder.setView(customView);
+
+        AlertDialog dialog = builder.create();
+
+        ((TextView) customView.findViewById(R.id.dialog_title)).setText("Clear All Conversations");
+        ((TextView) customView.findViewById(R.id.tvYes)).setText("Yes");
+        ((TextView) customView.findViewById(R.id.dialog_message)).setText("Are you sure you want to clear all conversations?");
+
+        customView.findViewById(R.id.cwYes).setOnClickListener(v -> common.deleteAllChats(this, () -> {
+            initChatRecyclerView();
+            dialog.dismiss();
+        }));
+
+        dialog.show();
     }
 
     private void loadNativeAd() {
