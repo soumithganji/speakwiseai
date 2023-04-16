@@ -11,19 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import chat.gpt.speakwise.gpt3.ai.chatbot.Activities.ChatActivity;
 import chat.gpt.speakwise.gpt3.ai.chatbot.CallBacks.DeleteChatCallBack;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
+import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.Common;
 
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
     List<String> chatList;
     Activity activity;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM hh:mm a");
+    Common common = new Common();
     DeleteChatCallBack deleteChatCallBack;
 
     public ChatAdapter(Activity activity, List<String> chatList, DeleteChatCallBack deleteChatCallBack) {
@@ -43,8 +42,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String chatTimeStamp = chatList.get(position);
-        String formattedTimeStamp = simpleDateFormat.format(new Date(Long.parseLong(chatTimeStamp)));
-        holder.tvLabel.setText(formattedTimeStamp);
+        holder.tvLabel.setText(common.getChatName(activity, chatTimeStamp));
         holder.llRoot.setOnClickListener(v -> {
             Intent intent = new Intent(activity, ChatActivity.class);
             intent.putExtra("timeStamp", chatTimeStamp);

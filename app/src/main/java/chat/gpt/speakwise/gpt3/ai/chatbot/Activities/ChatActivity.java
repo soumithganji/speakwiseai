@@ -211,7 +211,7 @@ public class ChatActivity extends AppCompatActivity {
             if (!timeStamp.isEmpty()) {
                 date = timeStamp;
             } else {
-                common.saveTimeStamp(this, date);
+                common.saveTimeStamp(this, date, messageList.get(0).getMessage());
             }
             common.saveChats(this, common.convertObjectListToString(tempList), date);
         }

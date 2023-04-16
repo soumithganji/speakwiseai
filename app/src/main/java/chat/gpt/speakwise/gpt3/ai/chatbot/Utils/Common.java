@@ -101,6 +101,7 @@ public class Common {
         editor.apply();
 
         deleteTimeStampFromList(activity, key, listener);
+        deleteChatName(activity, key);
     }
 
     public String convertObjectListToString(List<Message> objectList) {
@@ -116,7 +117,7 @@ public class Common {
     }
 
 
-    public void saveTimeStamp(Activity activity, String date) {
+    public void saveTimeStamp(Activity activity, String date, String message) {
         SharedPreferences prefs = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
         String dateString = prefs.getString("list", "");
 
@@ -130,6 +131,26 @@ public class Common {
 
         SharedPreferences.Editor editor = activity.getSharedPreferences("speakwise", MODE_PRIVATE).edit();
         editor.putString("list", gson.toJson(list));
+        editor.apply();
+
+        saveChatName(activity, date, message);
+    }
+
+    public String getChatName(Activity activity, String timeStamp) {
+        SharedPreferences prefs = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
+        return prefs.getString("chat_name_" + timeStamp, "");
+    }
+
+    public void saveChatName(Activity activity, String timeStamp, String chatName) {
+        SharedPreferences.Editor editor = activity.getSharedPreferences("speakwise", MODE_PRIVATE).edit();
+        editor.putString("chat_name_" + timeStamp, chatName);
+        editor.apply();
+    }
+
+    public void deleteChatName(Activity activity, String timeStamp) {
+        SharedPreferences preferences = activity.getSharedPreferences("speakwise", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("chat_name_" + timeStamp);
         editor.apply();
     }
 

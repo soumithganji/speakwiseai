@@ -28,6 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@+id/imDelete"
+            android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/primary_white"
             android:textSize="16sp" />
