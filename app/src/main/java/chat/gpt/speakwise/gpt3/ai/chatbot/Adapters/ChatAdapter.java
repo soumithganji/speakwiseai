@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import chat.gpt.speakwise.gpt3.ai.chatbot.Activities.ChatActivity;
+import chat.gpt.speakwise.gpt3.ai.chatbot.CallBacks.DeleteChatCallBack;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 
 
@@ -23,10 +24,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     List<String> chatList;
     Activity activity;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM hh:mm a");
+    DeleteChatCallBack deleteChatCallBack;
 
-    public ChatAdapter(Activity activity, List<String> chatList) {
+    public ChatAdapter(Activity activity, List<String> chatList, DeleteChatCallBack deleteChatCallBack) {
         this.activity = activity;
         this.chatList = chatList;
+        this.deleteChatCallBack = deleteChatCallBack;
     }
 
     @NonNull
@@ -46,6 +49,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
             Intent intent = new Intent(activity, ChatActivity.class);
             intent.putExtra("timeStamp", chatTimeStamp);
             activity.startActivity(intent);
+        });
+
+        holder.llRoot.setOnLongClickListener(v -> {
+            deleteChatCallBack.onDeleteClicked(chatTimeStamp);
+            return true;
         });
     }
 

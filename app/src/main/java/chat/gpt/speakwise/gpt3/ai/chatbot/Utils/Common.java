@@ -94,6 +94,15 @@ public class Common {
         new Handler().post(listener::onPreferencesCleared);
     }
 
+    public void deleteChat(Activity activity, String key, OnPreferencesClearedListener listener) {
+        SharedPreferences preferences = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("chats_" + key);
+        editor.apply();
+
+        deleteTimeStampFromList(activity, key, listener);
+    }
+
     public String convertObjectListToString(List<Message> objectList) {
         Gson gson = new Gson();
         return gson.toJson(objectList);
@@ -122,5 +131,28 @@ public class Common {
         SharedPreferences.Editor editor = activity.getSharedPreferences("speakwise", MODE_PRIVATE).edit();
         editor.putString("list", gson.toJson(list));
         editor.apply();
+    }
+
+    private void deleteTimeStampFromList(Activity activity, String key, OnPreferencesClearedListener listener) {
+        SharedPreferences prefs = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
+        String dateString = prefs.getString("list", "");
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+
+
+        ArrayList<String> list = gson.fromJson(dateString, type);
+
+        if (list != null && !list.isEmpty()) {
+            list.remove(key);
+        }
+
+
+        SharedPreferences.Editor editor = activity.getSharedPreferences("speakwise", MODE_PRIVATE).edit();
+        editor.putString("list", gson.toJson(list));
+        editor.apply();
+
+        new Handler().post(listener::onPreferencesCleared);
     }
 }

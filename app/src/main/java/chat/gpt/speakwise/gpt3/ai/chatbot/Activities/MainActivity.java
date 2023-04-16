@@ -191,16 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<String> list = gson.fromJson(dateString, type);
 
-        if (list == null) {
-            LinearLayoutManager llm = new LinearLayoutManager(this);
-            llm.setStackFromEnd(true);
-            binding.recyclerView.setLayoutManager(llm);
-            ChatAdapter chatAdapter = new ChatAdapter(this, new ArrayList<>());
-            binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
-            binding.recyclerView.setAdapter(chatAdapter);
-
-            return;
-        }
+        if (list == null) list = new ArrayList<>();
 
         Collections.sort(list, (timestamp1, timestamp2) -> {
             long t1 = Long.parseLong(timestamp1);
@@ -211,9 +202,28 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setStackFromEnd(true);
         binding.recyclerView.setLayoutManager(llm);
-        ChatAdapter chatAdapter = new ChatAdapter(this, list);
+        ChatAdapter chatAdapter = new ChatAdapter(this, list, chatTimeStamp -> showDeleteChatDialog(chatTimeStamp));
         binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerView.setAdapter(chatAdapter);
+    }
+
+    private void showDeleteChatDialog(String chatTimeStamp) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View customView = getLayoutInflater().inflate(R.layout.app_update_dialog, null);
+        builder.setView(customView);
+
+        AlertDialog dialog = builder.create();
+
+        ((TextView) customView.findViewById(R.id.dialog_title)).setText("Clear Conversation");
+        ((TextView) customView.findViewById(R.id.tvYes)).setText("Yes");
+        ((TextView) customView.findViewById(R.id.dialog_message)).setText("Are you sure you want to clear the conversation?");
+
+        customView.findViewById(R.id.cwYes).setOnClickListener(v -> {
+            common.deleteChat(MainActivity.this, chatTimeStamp, () -> initChatRecyclerView());
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 
     private void checkAppUpdate(HashMap<String, String> manditoryUpdateMap) {
