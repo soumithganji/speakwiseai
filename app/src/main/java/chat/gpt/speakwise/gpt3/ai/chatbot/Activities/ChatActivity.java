@@ -23,7 +23,6 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -238,7 +237,7 @@ public class ChatActivity extends AppCompatActivity {
                 jsonBody.put("max_tokens", common.getFree_max_tokens());
             }
         } catch (JSONException e) {
-            FirebaseCrashlytics.getInstance().log(e.toString());
+            FirebaseCrashlytics.getInstance().recordException(e);
             e.printStackTrace();
         }
 
@@ -254,7 +253,7 @@ public class ChatActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                FirebaseCrashlytics.getInstance().log((new Gson()).toJson(e));
+                FirebaseCrashlytics.getInstance().recordException(e);
                 addResponse("Something went wrong, please try again later.");
                 runOnUiThread(() -> binding.bottomLayout.setVisibility(View.GONE));
             }
@@ -274,7 +273,12 @@ public class ChatActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    FirebaseCrashlytics.getInstance().log((new Gson()).toJson(response.body()));
+                    try {
+                        throw new Exception("Api Response Error");
+                    } catch (Exception e) {
+                        FirebaseCrashlytics.getInstance().log(response.body().string());
+                        FirebaseCrashlytics.getInstance().recordException(e);
+                    }
                     addResponse("Something went wrong, please try again later.");
                     runOnUiThread(() -> binding.bottomLayout.setVisibility(View.GONE));
                 }
