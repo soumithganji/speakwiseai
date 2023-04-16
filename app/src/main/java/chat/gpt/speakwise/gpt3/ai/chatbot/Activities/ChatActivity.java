@@ -23,6 +23,7 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -101,7 +102,7 @@ public class ChatActivity extends AppCompatActivity {
     private void loadFullScreenAd() {
         loadInterstitialAd();
 
-        handlerFullScreen.postDelayed(this::loadFullScreenAd, 40000);
+        handlerFullScreen.postDelayed(this::loadFullScreenAd, 60000);
     }
 
     private void initBannerChat() {
@@ -211,6 +212,7 @@ public class ChatActivity extends AppCompatActivity {
             if (!timeStamp.isEmpty()) {
                 date = timeStamp;
             } else {
+                timeStamp = date;
                 common.saveTimeStamp(this, date, messageList.get(0).getMessage());
             }
             common.saveChats(this, common.convertObjectListToString(tempList), date);
@@ -252,7 +254,7 @@ public class ChatActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                FirebaseCrashlytics.getInstance().log(e.toString());
+                FirebaseCrashlytics.getInstance().log((new Gson()).toJson(e));
                 addResponse("Something went wrong, please try again later.");
                 runOnUiThread(() -> binding.bottomLayout.setVisibility(View.GONE));
             }
@@ -272,7 +274,7 @@ public class ChatActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    FirebaseCrashlytics.getInstance().log(response.message());
+                    FirebaseCrashlytics.getInstance().log((new Gson()).toJson(response.body()));
                     addResponse("Something went wrong, please try again later.");
                     runOnUiThread(() -> binding.bottomLayout.setVisibility(View.GONE));
                 }
