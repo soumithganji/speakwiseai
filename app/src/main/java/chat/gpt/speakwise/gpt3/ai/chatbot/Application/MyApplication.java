@@ -120,7 +120,7 @@ public class MyApplication extends Application
      */
     private class AppOpenAdManager {
 
-        private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/3419835294";
+        private static final String AD_UNIT_ID = "ca-app-pub-9204973610258773/2232158856";
 
         private AppOpenAd appOpenAd = null;
         private boolean isLoadingAd = false;

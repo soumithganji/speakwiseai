@@ -60,7 +60,7 @@ public class ChatActivity extends AppCompatActivity {
     String timeStamp = "";
     boolean isChanged = false;
     InterstitialAd interstitialAd;
-    private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
+    private static final String AD_UNIT_ID_FULLSCREEN = "ca-app-pub-9204973610258773/4054955530";
 
     private Handler handlerFullScreen;
     private Handler handlerBanner;
@@ -300,7 +300,7 @@ public class ChatActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         InterstitialAd.load(
                 this,
-                AD_UNIT_ID,
+                AD_UNIT_ID_FULLSCREEN,
                 adRequest,
                 new InterstitialAdLoadCallback() {
                     @Override

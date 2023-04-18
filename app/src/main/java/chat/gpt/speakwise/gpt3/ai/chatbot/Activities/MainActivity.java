@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     String appPlayStoreLink;
     Common common = Common.getInstance();
 
-    private static final String AD_MANAGER_AD_UNIT_ID = "/6499/example/native";
+    private static final String AD_MANAGER_AD_UNIT_ID = "ca-app-pub-9204973610258773/8429901548";
     private NativeAd nativeAd;
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(

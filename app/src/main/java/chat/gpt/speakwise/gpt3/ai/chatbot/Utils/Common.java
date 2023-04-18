@@ -24,7 +24,7 @@ public class Common {
     private static Common single_instance = null;
     private static long free_max_tokens = 3000;
     private static boolean free_unlimited_tokens = false;
-    private static double temperature = 0.7;
+    private static double temperature = 1;
 
     public static Common getInstance() {
         if (single_instance == null)
