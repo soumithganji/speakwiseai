@@ -82,13 +82,14 @@ public class ChatActivity extends AppCompatActivity {
         loadFullScreenAd();
         initBannerChat();
 
-        if (!common.hasInternetConnection(this)) {
-            Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         timeStamp = getIntent().getStringExtra("timeStamp");
         if (timeStamp == null) timeStamp = "";
+
+        if (!common.hasInternetConnection(this)) {
+            Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            initChatRecyclerView();
+            return;
+        }
 
         client = new OkHttpClient().newBuilder()
                 .readTimeout(50, TimeUnit.SECONDS)
