@@ -38,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 import chat.gpt.speakwise.gpt3.ai.chatbot.BuildConfig;
 import chat.gpt.speakwise.gpt3.ai.chatbot.Models.Message;
 import chat.gpt.speakwise.gpt3.ai.chatbot.Adapters.MessageAdapter;
+import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityChatBinding;
 import okhttp3.Call;
@@ -69,6 +70,10 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityChatBinding.inflate(getLayoutInflater());
+        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentApiVersion >= android.os.Build.VERSION_CODES.P) {
+            overridePendingTransition(R.anim.enter, R.anim.exit);
+        }
         setContentView(binding.getRoot());
 
         handlerFullScreen = new Handler();
@@ -102,7 +107,7 @@ public class ChatActivity extends AppCompatActivity {
         handlerFullScreen.postDelayed(() -> {
             loadInterstitialAd();
             loadFullScreenAd();
-        }, 30000);
+        }, 60000);
     }
 
     private void initBannerChat() {

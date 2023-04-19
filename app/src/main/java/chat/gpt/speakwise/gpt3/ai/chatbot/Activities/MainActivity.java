@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -333,10 +334,8 @@ public class MainActivity extends AppCompatActivity {
             }
             MainActivity.this.nativeAd = nativeAd;
             FrameLayout frameLayout = findViewById(R.id.fl_adplaceholder);
-            NativeAdView adView =
-                    (NativeAdView)
-                            getLayoutInflater().inflate(R.layout.ad_unified, frameLayout, false);
-            populateNativeAdView(nativeAd, adView);
+            RelativeLayout adView = (RelativeLayout) getLayoutInflater().inflate(R.layout.ad_unified, frameLayout, false);
+            populateNativeAdView(nativeAd, adView.findViewById(R.id.adView));
             frameLayout.removeAllViews();
             frameLayout.addView(adView);
         });
