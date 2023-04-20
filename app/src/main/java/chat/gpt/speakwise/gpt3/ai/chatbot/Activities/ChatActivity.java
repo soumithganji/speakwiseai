@@ -22,6 +22,7 @@ import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.json.JSONArray;
@@ -276,6 +277,7 @@ public class ChatActivity extends AppCompatActivity {
                         String result = message.getString("content");
                         isChanged = true;
                         addResponse(result.trim());
+                        FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("response_received", null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
