@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Window;
 
+import com.onesignal.OneSignal;
+
 import chat.gpt.speakwise.gpt3.ai.chatbot.Application.MyApplication;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivitySplashBinding;
@@ -18,6 +20,7 @@ public class SplashActivity extends AppCompatActivity {
 
     ActivitySplashBinding binding;
     private static final long COUNTER_TIME = 4;
+    private static final String ONESIGNAL_APP_ID = "e5d8ed31-6fb5-4245-9157-1c2ddf35c503";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,13 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         createTimer(COUNTER_TIME);
+
+        initOneSignal();
+    }
+
+    private void initOneSignal() {
+        OneSignal.initWithContext(getApplicationContext());
+        OneSignal.setAppId(ONESIGNAL_APP_ID);
     }
 
     private void createTimer(long seconds) {
