@@ -16,7 +16,7 @@ android {
         applicationId "chat.gpt.speakwise.gpt3.ai.chatbot"
         minSdk 19
         targetSdk 33
-        versionCode 5
+        versionCode 6
         versionName "1.01"
         multiDexEnabled true
 
