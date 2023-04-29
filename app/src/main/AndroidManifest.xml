@@ -31,10 +31,13 @@
 
         <activity
             android:name=".Activities.MainActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" />
         <activity
             android:name=".Activities.ChatActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" />
+
     </application>
 
 </manifest>
