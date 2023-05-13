@@ -198,7 +198,7 @@ public class ChatActivity extends AppCompatActivity {
 
     void addToChat(String message, String sentBy) {
         runOnUiThread(() -> {
-            if (sentBy == Message.SENT_BY_ME || message.equals("Something went wrong, please try again later.")) {
+            if (sentBy == Message.SENT_BY_ME || isErrorMessage(message)) {
                 messageList.add(new Message(message.trim(), sentBy, false));
             } else {
                 messageList.add(new Message(message.trim(), sentBy, true));
@@ -211,7 +211,7 @@ public class ChatActivity extends AppCompatActivity {
     void addResponse(String response) {
         messageList.remove(messageList.size() - 1);
 
-        if (!response.equals("Something went wrong, please try again later.")) {
+        if (!isErrorMessage(response)) {
             List<Message> tempList = new ArrayList<>(messageList);
             tempList.add(new Message(response, Message.SENT_BY_BOT, true));
 
@@ -225,6 +225,11 @@ public class ChatActivity extends AppCompatActivity {
             common.saveChats(this, common.convertObjectListToString(tempList), date);
         }
         addToChat(response, Message.SENT_BY_BOT);
+    }
+
+    private boolean isErrorMessage(String message) {
+        return (message.equals("Something went wrong, please try again later.")
+                || message.equals("The maximum chat length is reached, please start a new chat."));
     }
 
     void callAPI() {
@@ -288,7 +293,7 @@ public class ChatActivity extends AppCompatActivity {
                         FirebaseCrashlytics.getInstance().log(response.body().string());
                         FirebaseCrashlytics.getInstance().recordException(e);
                     }
-                    addResponse("Something went wrong, please try again later.");
+                    addResponse("The maximum chat length is reached, please start a new chat.");
                     runOnUiThread(() -> binding.bottomLayout.setVisibility(View.GONE));
                 }
             }
