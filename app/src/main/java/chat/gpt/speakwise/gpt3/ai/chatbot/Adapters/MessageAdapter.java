@@ -14,8 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.util.List;
 
@@ -25,6 +28,7 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {
     List<Message> messageList;
     Activity activity;
+
     public MessageAdapter(Activity activity, List<Message> messageList) {
         this.activity = activity;
         this.messageList = messageList;
@@ -34,13 +38,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View chatView = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_item, null);
-        MyViewHolder myViewHolder = new MyViewHolder(chatView);
-        return myViewHolder;
+        return new MyViewHolder(chatView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Message message = messageList.get(position);
+        Message message;
+        try {
+            message = messageList.get(position);
+        } catch (Exception e) {
+            FirebaseCrashlytics.getInstance().recordException(e);
+            activity.finish();
+            return;
+        }
         if (message.getSentBy().equals(Message.SENT_BY_ME)) {
             holder.botChatView.setVisibility(View.GONE);
             holder.userChatView.setVisibility(View.VISIBLE);
@@ -57,9 +67,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             holder.llCopy.setVisibility(View.GONE);
         }
 
+        Message finalMessage = message;
         holder.imCopy.setOnClickListener(v -> {
             ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("label", message.getMessage());
+            ClipData clip = ClipData.newPlainText("label", finalMessage.getMessage());
             clipboard.setPrimaryClip(clip);
             Toast.makeText(activity, "Copied to clipboard!", Toast.LENGTH_SHORT).show();
         });
@@ -67,7 +78,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         holder.imShare.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, message.getMessage());
+            intent.putExtra(Intent.EXTRA_TEXT, finalMessage.getMessage());
             activity.startActivity(Intent.createChooser(intent, "Share via"));
         });
     }
