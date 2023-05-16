@@ -2,6 +2,7 @@ package chat.gpt.speakwise.gpt3.ai.chatbot.Activities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -113,19 +114,19 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     long free_max_tokens = documentSnapshot.getLong("free_max_tokens");
                     common.setFree_max_tokens(free_max_tokens);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
 
                 }
                 try {
                     boolean free_unlimited_tokens = documentSnapshot.getBoolean("free_unlimited_tokens");
                     common.setFree_unlimited_tokens(free_unlimited_tokens);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
 
                 }
                 try {
                     double temperature = documentSnapshot.getDouble("temperature");
                     common.setTemperature(temperature);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
 
                 }
 
@@ -210,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setStackFromEnd(true);
         binding.recyclerView.setLayoutManager(llm);
-        ChatAdapter chatAdapter = new ChatAdapter(this, list, chatTimeStamp -> showDeleteChatDialog(chatTimeStamp));
+        ChatAdapter chatAdapter = new ChatAdapter(this, list, this::showDeleteChatDialog);
         binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerView.setAdapter(chatAdapter);
     }
@@ -227,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) customView.findViewById(R.id.dialog_message)).setText("Are you sure you want to clear the conversation?");
 
         customView.findViewById(R.id.cwYes).setOnClickListener(v -> {
-            common.deleteChat(MainActivity.this, chatTimeStamp, () -> initChatRecyclerView());
+            common.deleteChat(MainActivity.this, chatTimeStamp, this::initChatRecyclerView);
             dialog.dismiss();
         });
 
@@ -349,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
 
         AdLoader adLoader = builder.withAdListener(new AdListener() {
             @Override
-            public void onAdFailedToLoad(LoadAdError loadAdError) {
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
 
             }
         }).build();
