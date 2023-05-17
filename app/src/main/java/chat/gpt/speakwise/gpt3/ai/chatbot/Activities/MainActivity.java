@@ -171,6 +171,8 @@ public class MainActivity extends AppCompatActivity {
     private void init(HashMap<String, String> manditoryUpdateMap) {
         appPlayStoreLink = "https://play.google.com/store/apps/details?id=" + getPackageName();
 
+        binding.cwBuyMeACoffee.setOnClickListener(v -> initBuyMeACoffee());
+
         binding.rlNewChat.setOnClickListener(v -> initNewChat());
 
         binding.rlRateApp.setOnClickListener(v -> initRateApp());
@@ -189,6 +191,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         checkAppUpdate(manditoryUpdateMap);
+    }
+
+    private void initBuyMeACoffee() {
+        String buyMeACoffee = "https://www.buymeacoffee.com/speakwiseai";
+        Uri webUri = Uri.parse(buyMeACoffee);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webUri);
+        startActivity(intent);
     }
 
     private void initChatRecyclerView() {
