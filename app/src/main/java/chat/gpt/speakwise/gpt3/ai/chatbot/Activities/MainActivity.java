@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         Uri webUri = Uri.parse(buyMeACoffee);
         Intent intent = new Intent(Intent.ACTION_VIEW, webUri);
         startActivity(intent);
+        FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("buy_me_a_coffee_clicked", null);
     }
 
     private void initChatRecyclerView() {
