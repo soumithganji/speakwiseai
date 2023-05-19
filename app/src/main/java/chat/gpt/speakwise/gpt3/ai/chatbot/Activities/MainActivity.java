@@ -256,20 +256,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showUpdateDialog(HashMap<String, String> manditoryUpdateMap) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View customView = getLayoutInflater().inflate(R.layout.app_update_dialog, null);
-        builder.setView(customView);
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View customView = getLayoutInflater().inflate(R.layout.app_update_dialog, null);
+            builder.setView(customView);
 
-        customView.findViewById(R.id.cwYes).setOnClickListener(v -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(appPlayStoreLink));
-            startActivity(browserIntent);
-        });
+            customView.findViewById(R.id.cwYes).setOnClickListener(v -> {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(appPlayStoreLink));
+                startActivity(browserIntent);
+            });
 
-        if (manditoryUpdateMap.containsValue(String.valueOf(BuildConfig.VERSION_CODE))) {
-            builder.setCancelable(false);
+            if (manditoryUpdateMap.containsValue(String.valueOf(BuildConfig.VERSION_CODE))) {
+                builder.setCancelable(false);
+            }
+
+            builder.show();
+        } catch (Exception ignored) {
+
         }
-
-        builder.show();
     }
 
     private void initNewChat() {
