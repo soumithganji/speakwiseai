@@ -58,6 +58,7 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.Adapters.ChatAdapter;
 import chat.gpt.speakwise.gpt3.ai.chatbot.BuildConfig;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.Common;
+import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.LinearLayoutManagerWrapper;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -218,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
             return Long.compare(t2, t1);
         });
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
+        LinearLayoutManager llm = new LinearLayoutManagerWrapper(this, LinearLayoutManager.VERTICAL, false);
         llm.setStackFromEnd(true);
         binding.recyclerView.setLayoutManager(llm);
         ChatAdapter chatAdapter = new ChatAdapter(this, list, this::showDeleteChatDialog);
