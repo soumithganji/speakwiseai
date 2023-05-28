@@ -287,13 +287,18 @@ public class ChatActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
+                    String responseBody = response.body().string();
                     try {
                         throw new Exception("Api Response Error");
                     } catch (Exception e) {
-                        FirebaseCrashlytics.getInstance().log(response.body().string());
+                        FirebaseCrashlytics.getInstance().log(responseBody);
                         FirebaseCrashlytics.getInstance().recordException(e);
                     }
-                    addResponse("The maximum chat length is reached, please start a new chat.");
+                    if (responseBody.contains("tokens")) {
+                        addResponse("The maximum chat length is reached, please start a new chat.");
+                    } else {
+                        addResponse("Something went wrong, please try again later.");
+                    }
                     runOnUiThread(() -> binding.bottomLayout.setVisibility(View.GONE));
                 }
             }
