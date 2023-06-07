@@ -62,7 +62,7 @@ public class ChatActivity extends AppCompatActivity {
     String timeStamp = "";
     boolean isChanged = false;
     InterstitialAd interstitialAd;
-    private static final String AD_UNIT_ID_FULLSCREEN = "ca-app-pub-9204973610258773/4054955530";
+    private static final String AD_UNIT_ID_FULLSCREEN = "ca-app-pub-4125120108950748/6526406286";
 
     private Handler handlerFullScreen;
     private Handler handlerBanner;
