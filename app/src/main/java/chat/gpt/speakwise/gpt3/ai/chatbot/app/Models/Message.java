@@ -1,4 +1,4 @@
-package chat.gpt.speakwise.gpt3.ai.chatbot.Models;
+package chat.gpt.speakwise.gpt3.ai.chatbot.app.Models;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package chat.gpt.speakwise.gpt3.ai.chatbot.Activities;
+package chat.gpt.speakwise.gpt3.ai.chatbot.app.Activities;
 
 import android.app.Application;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.view.Window;
 
 import com.onesignal.OneSignal;
 
-import chat.gpt.speakwise.gpt3.ai.chatbot.Application.MyApplication;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Application.MyApplication;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivitySplashBinding;
 
@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
 
     ActivitySplashBinding binding;
     private static final long COUNTER_TIME = 4;
-    private static final String ONESIGNAL_APP_ID = "e5d8ed31-6fb5-4245-9157-1c2ddf35c503";
+    private static final String ONESIGNAL_APP_ID = "6a096862-307e-41c9-b467-937ac9b51987";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

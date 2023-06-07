@@ -1,4 +1,4 @@
-package chat.gpt.speakwise.gpt3.ai.chatbot.Activities;
+package chat.gpt.speakwise.gpt3.ai.chatbot.app.Activities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -54,11 +54,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-import chat.gpt.speakwise.gpt3.ai.chatbot.Adapters.ChatAdapter;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Adapters.ChatAdapter;
 import chat.gpt.speakwise.gpt3.ai.chatbot.BuildConfig;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
-import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.Common;
-import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.LinearLayoutManagerWrapper;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.Common;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.LinearLayoutManagerWrapper;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package chat.gpt.speakwise.gpt3.ai.chatbot.Application;
+package chat.gpt.speakwise.gpt3.ai.chatbot.app.Application;
 
 import android.app.Activity;
 import android.app.Application;

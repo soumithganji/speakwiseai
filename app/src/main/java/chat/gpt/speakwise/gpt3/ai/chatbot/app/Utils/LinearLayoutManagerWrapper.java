@@ -1,4 +1,4 @@
-package chat.gpt.speakwise.gpt3.ai.chatbot.Utils;
+package chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -1,4 +1,4 @@
-package chat.gpt.speakwise.gpt3.ai.chatbot.Adapters;
+package chat.gpt.speakwise.gpt3.ai.chatbot.app.Adapters;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -22,7 +22,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.util.List;
 
-import chat.gpt.speakwise.gpt3.ai.chatbot.Models.Message;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Models.Message;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {

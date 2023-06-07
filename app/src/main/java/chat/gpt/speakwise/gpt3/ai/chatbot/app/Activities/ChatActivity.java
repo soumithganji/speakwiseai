@@ -1,4 +1,4 @@
-package chat.gpt.speakwise.gpt3.ai.chatbot.Activities;
+package chat.gpt.speakwise.gpt3.ai.chatbot.app.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,10 +37,10 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import chat.gpt.speakwise.gpt3.ai.chatbot.BuildConfig;
-import chat.gpt.speakwise.gpt3.ai.chatbot.Models.Message;
-import chat.gpt.speakwise.gpt3.ai.chatbot.Adapters.MessageAdapter;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Models.Message;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Adapters.MessageAdapter;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
-import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.Common;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityChatBinding;
 import okhttp3.Call;
 import okhttp3.Callback;

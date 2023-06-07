@@ -1,4 +1,4 @@
-package chat.gpt.speakwise.gpt3.ai.chatbot.Utils;
+package chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -17,8 +17,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import chat.gpt.speakwise.gpt3.ai.chatbot.CallBacks.OnPreferencesClearedListener;
-import chat.gpt.speakwise.gpt3.ai.chatbot.Models.Message;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.CallBacks.OnPreferencesClearedListener;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Models.Message;
 
 public class Common {
     private static Common single_instance = null;

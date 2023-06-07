@@ -1,4 +1,4 @@
-package chat.gpt.speakwise.gpt3.ai.chatbot.Adapters;
+package chat.gpt.speakwise.gpt3.ai.chatbot.app.Adapters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import chat.gpt.speakwise.gpt3.ai.chatbot.Activities.ChatActivity;
-import chat.gpt.speakwise.gpt3.ai.chatbot.CallBacks.DeleteChatCallBack;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Activities.ChatActivity;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.CallBacks.DeleteChatCallBack;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
-import chat.gpt.speakwise.gpt3.ai.chatbot.Utils.Common;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.Common;
 
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
