@@ -104,6 +104,17 @@ public class Common {
         deleteChatName(activity, key);
     }
 
+    public void incrementAppOpenCount(Activity activity) {
+        SharedPreferences.Editor editor = activity.getSharedPreferences("speakwise", MODE_PRIVATE).edit();
+        editor.putInt("app_open_count", getAppOpenCount(activity) + 1);
+        editor.apply();
+    }
+
+    public int getAppOpenCount(Activity activity) {
+        SharedPreferences prefs = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
+        return prefs.getInt("app_open_count", 0);
+    }
+
     public String convertObjectListToString(List<Message> objectList) {
         Gson gson = new Gson();
         return gson.toJson(objectList);
