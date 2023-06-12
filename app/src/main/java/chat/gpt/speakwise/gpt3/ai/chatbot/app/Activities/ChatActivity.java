@@ -109,7 +109,7 @@ public class ChatActivity extends AppCompatActivity {
         handlerFullScreen.postDelayed(() -> {
             loadInterstitialAd();
             loadFullScreenAd();
-        }, 60000);
+        }, 40000);
     }
 
     private void initBannerChat() {
