@@ -9,6 +9,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -72,6 +74,12 @@ public class Common {
             e.printStackTrace();
         }
         return isOnline;
+    }
+
+    public static void showKeyboard(Context context, EditText editText) {
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        editText.requestFocus();
+        inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
     }
 
     public String getChats(Activity activity, String timeStamp) {

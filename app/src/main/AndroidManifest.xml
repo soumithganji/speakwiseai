@@ -15,6 +15,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWiseAI">
+
+        <receiver
+            android:name=".app.Utils.AppWidgetSmall"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/small_app_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".app.Utils.AppWidgetLarge"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/large_app_widget_info" />
+        </receiver>
+
         <activity
             android:name=".app.Activities.SplashActivity"
             android:exported="true">
@@ -37,7 +62,6 @@
             android:name=".app.Activities.ChatActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true" />
-
     </application>
 
 </manifest>

@@ -92,6 +92,10 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
 
+        if (timeStamp.isEmpty()) {
+            Common.showKeyboard(this, binding.messageEditText);
+        }
+
         client = new OkHttpClient().newBuilder()
                 .readTimeout(50, TimeUnit.SECONDS)
                 .writeTimeout(50, TimeUnit.SECONDS)
