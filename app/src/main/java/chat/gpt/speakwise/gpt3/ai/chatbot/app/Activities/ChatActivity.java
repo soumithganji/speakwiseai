@@ -107,6 +107,10 @@ public class ChatActivity extends AppCompatActivity {
         binding.btnVoice.setOnClickListener(v -> initTextToSpeech());
 
         binding.sendBtn.setOnClickListener((v) -> sendMessage());
+
+        if (getIntent().getBooleanExtra("fromWidget", false)) {
+            FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("widget_clicked", null);
+        }
     }
 
     private void loadFullScreenAd() {

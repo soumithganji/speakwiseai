@@ -15,6 +15,7 @@ public class AppWidgetLarge extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
         Intent intent = new Intent(context, ChatActivity.class);
+        intent.putExtra("fromWidget", true);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
