@@ -302,12 +302,14 @@ public class MainActivity extends AppCompatActivity {
     private void initNewChat() {
         Intent intent = new Intent(this, ChatActivity.class);
         activityResultLauncher.launch(intent);
+        FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("new_chat_clicked", null);
     }
 
     private void initRateApp() {
         Uri webUri = Uri.parse(appPlayStoreLink);
         Intent intent = new Intent(Intent.ACTION_VIEW, webUri);
         startActivity(intent);
+        FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("rate_app_clicked", null);
     }
 
     private void initShareApp() {
@@ -320,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, message);
         startActivity(Intent.createChooser(intent, "Share via"));
+        FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("share_app_clicked", null);
     }
 
     private void initFeedBack() {
@@ -332,6 +335,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Contact " + supportEmail, Toast.LENGTH_SHORT).show();
         }
+        FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("provide_feedback_clicked", null);
     }
 
     private void showDeleteAllChatsDialog() {
