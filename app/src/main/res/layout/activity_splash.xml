@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:gravity="center"
-            android:text="This app is 100% free to use! We use advertisements to support the development of this app."
+            android:text="Enjoy Unlimited ChatGPT Queries\n 100% Free Forever"
             android:textColor="@color/primary_black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView" />
