@@ -30,6 +30,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public void applyOverrideConfiguration(Configuration overrideConfiguration) {
+        if (context == null) return;
         Common common = new Common();
         Locale locale = new Locale(common.getLang(context));
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
