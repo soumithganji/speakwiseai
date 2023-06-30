@@ -4,13 +4,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -63,8 +64,9 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.LinearLayoutManagerWrapper;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
+import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.LanguageChangeDialogBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     ActivityMainBinding binding;
     String supportEmail = "chat.speakwiseai@gmail.com";
     String appPlayStoreLink;
@@ -196,6 +198,8 @@ public class MainActivity extends AppCompatActivity {
 
         binding.cwBuyMeACoffee.setOnClickListener(v -> initBuyMeACoffee());
 
+        binding.cwLanguage.setOnClickListener(v -> initLanguageChange());
+
         binding.rlNewChat.setOnClickListener(v -> initNewChat());
 
         binding.rlRateApp.setOnClickListener(v -> initRateApp());
@@ -214,6 +218,39 @@ public class MainActivity extends AppCompatActivity {
         }
 
         checkAppUpdate(manditoryUpdateMap);
+    }
+
+    private void initLanguageChange() {
+        Dialog dialog = new Dialog(this);
+        LanguageChangeDialogBinding binding = LanguageChangeDialogBinding.inflate(getLayoutInflater());
+        dialog.setContentView(binding.getRoot());
+        dialog.show();
+
+        String lang = common.getLang(getApplicationContext());
+        switch (lang) {
+            case "en":
+                binding.rbEnglish.setChecked(true);
+                break;
+            case "zh":
+                binding.rbChinese.setChecked(true);
+        }
+
+        binding.rgLanguage.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.rbEnglish:
+                    common.saveLang(context, "en");
+                    break;
+                case R.id.rbChinese:
+                    common.saveLang(context, "zh");
+            }
+
+            PackageManager pm = getPackageManager();
+            Intent intent = pm.getLaunchIntentForPackage(getPackageName());
+            finishAffinity();
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+        });
+
     }
 
     private void initBuyMeACoffee() {

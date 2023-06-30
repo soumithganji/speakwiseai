@@ -24,4 +24,9 @@
     <style name="Theme.SpeakWiseAI.AppWidgetContainer" parent="Theme.SpeakWiseAI.AppWidgetContainerParent">
         <item name="appWidgetPadding">1dp</item>
     </style>
+
+    <style name="whiteRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:buttonTint">@color/white</item> <!-- Set the button tint color to white -->
+    </style>
+
 </resources>

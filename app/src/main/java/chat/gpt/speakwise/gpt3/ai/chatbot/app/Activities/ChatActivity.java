@@ -50,7 +50,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseActivity {
     ActivityChatBinding binding;
     private static final int REQUEST_CODE_SPEECH_INPUT = 100;
     private static final int REQUEST_CODE_PERMISSION = 200;

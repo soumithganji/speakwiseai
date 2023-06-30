@@ -166,6 +166,17 @@ public class Common {
         editor.apply();
     }
 
+    public String getLang(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("speakwise", MODE_PRIVATE);
+        return prefs.getString("app_lang", "en");
+    }
+
+    public void saveLang(Context context, String chatName) {
+        SharedPreferences.Editor editor = context.getSharedPreferences("speakwise", MODE_PRIVATE).edit();
+        editor.putString("app_lang", chatName);
+        editor.apply();
+    }
+
     public void deleteChatName(Activity activity, String timeStamp) {
         SharedPreferences preferences = activity.getSharedPreferences("speakwise", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

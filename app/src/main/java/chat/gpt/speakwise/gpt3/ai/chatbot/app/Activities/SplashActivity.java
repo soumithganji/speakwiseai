@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.Window;
 
 import com.onesignal.OneSignal;
@@ -16,7 +13,7 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.app.Application.MyApplication;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivitySplashBinding;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     ActivitySplashBinding binding;
     private static final long COUNTER_TIME = 4;

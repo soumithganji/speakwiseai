@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SpeakWise AI 聊天机器人</string>
+    <string name="ask_me_anything">问我任何问题...</string>
+    <string name="powered_by_gpt_3">由 GPT-3 提供支持。智言 AI 可能无意中传播错误信息或误解。</string>
+    <string name="new_chat">新聊天</string>
+    <string name="clear_chats">清除聊天记录</string>
+    <string name="provide_feedback">提供反馈</string>
+    <string name="rate_app">评价应用</string>
+    <string name="share_with_friends">与朋友分享</string>
+    <string name="powered_by_gpt_3_main_screen">由 GPT-3 提供支持</string>
+    <string name="splash_text">畅享无限 ChatGPT 查询\n 100% 免费永久使用</string>
+    <string name="update_available">有更新可用</string>
+    <string name="update_the_app_now_to_continue_using_speakwise_ai">立即更新应用以继续使用智言 AI。</string>
+    <string name="widget_new_chat">+  新聊天</string>
+    <string name="change_app_language">更改应用语言</string>
+</resources>

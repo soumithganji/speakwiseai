@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">SpeakWise AI ChatBot</string>
+    <string name="ask_me_anything">Ask me anything…</string>
+    <string name="powered_by_gpt_3">Powered by GPT-3. SpeakWise AI may unintentionally propagate misinformation or misconceptions.</string>
+    <string name="new_chat">New Chat</string>
+    <string name="clear_chats">Clear chats</string>
+    <string name="provide_feedback">Provide feedback</string>
+    <string name="rate_app">Rate app</string>
+    <string name="share_with_friends">Share with friends</string>
+    <string name="powered_by_gpt_3_main_screen">Powered by GPT-3</string>
+    <string name="splash_text">Enjoy Unlimited ChatGPT Queries\n 100% Free Forever</string>
+    <string name="update_available">Update Available</string>
+    <string name="update_the_app_now_to_continue_using_speakwise_ai">Update the app now to continue using SpeakWise AI.</string>
+    <string name="widget_new_chat">+  New Chat</string>
+    <string name="change_app_language">Change App Language</string>
 </resources>
