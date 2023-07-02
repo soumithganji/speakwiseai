@@ -102,7 +102,7 @@ public class MainActivity extends BaseActivity {
 
         FirebaseApp.initializeApp(this);
         FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("config").document("speakwiseai");
