@@ -104,14 +104,12 @@
 
         </LinearLayout>
 
-        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        <com.startapp.sdk.ads.banner.Banner
             android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-9204973610258773/3532211355" />
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 

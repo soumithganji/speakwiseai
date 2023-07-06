@@ -78,6 +78,9 @@ dependencies {
     //onesignal
     implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
 
+    //start.io
+    implementation 'com.startapp:inapp-sdk:4.10.+'
+
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-runtime:2.5.1"
     implementation 'androidx.lifecycle:lifecycle-process:2.5.1'

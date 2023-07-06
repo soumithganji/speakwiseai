@@ -121,10 +121,10 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void initBannerChat() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-        binding.adView.loadAd(adRequest);
-
-        handlerBanner.postDelayed(this::initBannerChat, 30000);
+        binding.adView.loadAd();
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        binding.adView.loadAd(adRequest);
+//        handlerBanner.postDelayed(this::initBannerChat, 30000);
     }
 
     private void initChatRecyclerView() {
