@@ -24,6 +24,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.startapp.sdk.adsbase.StartAppAd;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,6 +67,7 @@ public class ChatActivity extends BaseActivity {
 
     private Handler handlerFullScreen;
     private Handler handlerBanner;
+    private StartAppAd startAppAd = new StartAppAd(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -327,6 +329,7 @@ public class ChatActivity extends BaseActivity {
     }
 
     public void loadInterstitialAd() {
+        startAppAd.showAd();
         AdRequest adRequest = new AdRequest.Builder().build();
         InterstitialAd.load(
                 this,
