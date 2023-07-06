@@ -134,7 +134,7 @@ public class ChatActivity extends BaseActivity {
         llm.setStackFromEnd(true);
         binding.recyclerView.setLayoutManager(llm);
         binding.recyclerView.setItemAnimator(null);
-        messageAdapter = new MessageAdapter(this, messageList);
+        messageAdapter = new MessageAdapter(this, messageList, startAppAd);
         binding.recyclerView.setAdapter(messageAdapter);
 
         String chatString = common.getChats(this, timeStamp);

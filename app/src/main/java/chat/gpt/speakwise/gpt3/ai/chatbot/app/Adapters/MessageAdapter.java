@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.startapp.sdk.adsbase.StartAppAd;
 
 import java.util.List;
 
@@ -28,10 +29,12 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {
     List<Message> messageList;
     Activity activity;
+    StartAppAd startAppAd;
 
-    public MessageAdapter(Activity activity, List<Message> messageList) {
+    public MessageAdapter(Activity activity, List<Message> messageList, StartAppAd startAppAd) {
         this.activity = activity;
         this.messageList = messageList;
+        this.startAppAd = startAppAd;
     }
 
     @NonNull
@@ -73,6 +76,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             ClipData clip = ClipData.newPlainText("label", finalMessage.getMessage());
             clipboard.setPrimaryClip(clip);
             Toast.makeText(activity, "Copied to clipboard!", Toast.LENGTH_SHORT).show();
+            startAppAd.showAd();
         });
 
         holder.imShare.setOnClickListener(v -> {
@@ -80,6 +84,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT, finalMessage.getMessage());
             activity.startActivity(Intent.createChooser(intent, "Share via"));
+            startAppAd.showAd();
         });
     }
 
