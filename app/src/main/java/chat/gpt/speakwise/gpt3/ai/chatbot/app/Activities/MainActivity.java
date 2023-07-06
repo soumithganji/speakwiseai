@@ -2,7 +2,6 @@ package chat.gpt.speakwise.gpt3.ai.chatbot.app.Activities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,24 +18,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdLoader;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.VideoController;
-import com.google.android.gms.ads.VideoOptions;
-import com.google.android.gms.ads.admanager.AdManagerAdRequest;
-import com.google.android.gms.ads.nativead.MediaView;
-import com.google.android.gms.ads.nativead.NativeAd;
-import com.google.android.gms.ads.nativead.NativeAdOptions;
-import com.google.android.gms.ads.nativead.NativeAdView;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -52,6 +36,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.startapp.sdk.ads.nativead.NativeAdDetails;
+import com.startapp.sdk.ads.nativead.NativeAdPreferences;
+import com.startapp.sdk.ads.nativead.StartAppNativeAd;
+import com.startapp.sdk.adsbase.Ad;
+import com.startapp.sdk.adsbase.adlisteners.AdEventListener;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -71,10 +60,6 @@ public class MainActivity extends BaseActivity {
     String supportEmail = "chat.speakwiseai@gmail.com";
     String appPlayStoreLink;
     Common common = Common.getInstance();
-
-    private static final String AD_MANAGER_AD_UNIT_ID = "ca-app-pub-4125120108950748/3301477147";
-    private NativeAd nativeAd;
-
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -395,118 +380,41 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadNativeAd() {
-        AdLoader.Builder builder = new AdLoader.Builder(this, AD_MANAGER_AD_UNIT_ID);
+        StartAppNativeAd startAppNativeAd = new StartAppNativeAd(this);
 
-        builder.forNativeAd(nativeAd -> {
-            // If this callback occurs after the activity is destroyed, you must call
-            // destroy and return or you may get a memory leak.
-            boolean isDestroyed;
-            isDestroyed = isDestroyed();
-            if (isDestroyed || isFinishing() || isChangingConfigurations()) {
-                nativeAd.destroy();
-                return;
-            }
-            // You must call destroy on old ads when you are done with them,
-            // otherwise you will have a memory leak.
-            if (MainActivity.this.nativeAd != null) {
-                MainActivity.this.nativeAd.destroy();
-            }
-            MainActivity.this.nativeAd = nativeAd;
-            FrameLayout frameLayout = findViewById(R.id.fl_adplaceholder);
-            RelativeLayout adView = (RelativeLayout) getLayoutInflater().inflate(R.layout.ad_unified, frameLayout, false);
-            populateNativeAdView(nativeAd, adView.findViewById(R.id.adView));
-            frameLayout.removeAllViews();
-            frameLayout.addView(adView);
-        });
-
-        VideoOptions videoOptions =
-                new VideoOptions.Builder().setStartMuted(true).build();
-
-        NativeAdOptions adOptions = new NativeAdOptions.Builder().setVideoOptions(videoOptions).build();
-
-        builder.withNativeAdOptions(adOptions);
-
-        AdLoader adLoader = builder.withAdListener(new AdListener() {
+        NativeAdPreferences nativePrefs = new NativeAdPreferences()
+                .setAdsNumber(1)
+                .setAutoBitmapDownload(true)
+                .setPrimaryImageSize(2);
+        AdEventListener adListener = new AdEventListener() {
             @Override
-            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+            public void onReceiveAd(Ad arg0) {
+                ArrayList<NativeAdDetails> ads = startAppNativeAd.getNativeAds();
 
-            }
-        }).build();
-        adLoader.loadAd(new AdManagerAdRequest.Builder().build());
-
-    }
-
-    private void populateNativeAdView(NativeAd nativeAd, NativeAdView adView) {
-        // Set the media view.
-        adView.setMediaView((MediaView) adView.findViewById(R.id.ad_media));
-
-        // Set other ad assets.
-        adView.setHeadlineView(adView.findViewById(R.id.ad_headline));
-        adView.setBodyView(adView.findViewById(R.id.ad_body));
-        adView.setCallToActionView(adView.findViewById(R.id.ad_call_to_action));
-        adView.setIconView(adView.findViewById(R.id.ad_app_icon));
-        adView.setStarRatingView(adView.findViewById(R.id.ad_stars));
-        adView.setAdvertiserView(adView.findViewById(R.id.ad_advertiser));
-
-        // The headline and mediaContent are guaranteed to be in every NativeAd.
-        ((TextView) adView.getHeadlineView()).setText(nativeAd.getHeadline());
-        adView.getMediaView().setMediaContent(nativeAd.getMediaContent());
-
-        // These assets aren't guaranteed to be in every NativeAd, so it's important to
-        // check before trying to display them.
-        if (nativeAd.getBody() == null) {
-            adView.getBodyView().setVisibility(View.GONE);
-        } else {
-            adView.getBodyView().setVisibility(View.VISIBLE);
-            ((TextView) adView.getBodyView()).setText(nativeAd.getBody());
-        }
-
-        if (nativeAd.getCallToAction() == null) {
-            adView.getCallToActionView().setVisibility(View.GONE);
-        } else {
-            adView.getCallToActionView().setVisibility(View.VISIBLE);
-            ((Button) adView.getCallToActionView()).setText(nativeAd.getCallToAction());
-        }
-
-        if (nativeAd.getIcon() == null) {
-            adView.getIconView().setVisibility(View.GONE);
-        } else {
-            ((ImageView) adView.getIconView()).setImageDrawable(nativeAd.getIcon().getDrawable());
-            adView.getIconView().setVisibility(View.VISIBLE);
-        }
-
-        if (nativeAd.getStarRating() == null) {
-            adView.getStarRatingView().setVisibility(View.GONE);
-        } else {
-            ((RatingBar) adView.getStarRatingView()).setRating(nativeAd.getStarRating().floatValue());
-            adView.getStarRatingView().setVisibility(View.VISIBLE);
-        }
-
-        if (nativeAd.getAdvertiser() == null) {
-            adView.getAdvertiserView().setVisibility(View.GONE);
-        } else {
-            ((TextView) adView.getAdvertiserView()).setText(nativeAd.getAdvertiser());
-            adView.getAdvertiserView().setVisibility(View.VISIBLE);
-        }
-
-        // This method tells the Google Mobile Ads SDK that you have finished populating your
-        // native ad view with this native ad.
-        adView.setNativeAd(nativeAd);
-
-        // Updates the UI to say whether or not this ad has a video asset.
-        if (nativeAd.getMediaContent() != null && nativeAd.getMediaContent().hasVideoContent()) {
-            VideoController vc = nativeAd.getMediaContent().getVideoController();
-            // Create a new VideoLifecycleCallbacks object and pass it to the VideoController. The
-            // VideoController will call methods on this object when events occur in the video
-            // lifecycle.
-            vc.setVideoLifecycleCallbacks(new VideoController.VideoLifecycleCallbacks() {
-                @Override
-                public void onVideoEnd() {
-                    // Publishers should allow native ads to complete video playback before
-                    // refreshing or replacing them with another ad in the same UI location.
-                    super.onVideoEnd();
+                if (ads.isEmpty()) {
+                    loadNativeAd();
+                    return;
                 }
-            });
-        }
+
+                binding.adLayout.adView.setVisibility(View.VISIBLE);
+
+                NativeAdDetails nativeAdDetails = ads.get(0);
+
+                binding.adLayout.adHeadline.setText(nativeAdDetails.getTitle());
+                binding.adLayout.adBody.setText(nativeAdDetails.getDescription());
+                binding.adLayout.adAppIcon.setImageBitmap(nativeAdDetails.getImageBitmap());
+                binding.adLayout.adCallToAction.setText(nativeAdDetails.isApp() ? "Install" : "Open");
+
+                nativeAdDetails.registerViewForInteraction(binding.adLayout.adView);
+                nativeAdDetails.registerViewForInteraction(binding.adLayout.adCallToAction);
+            }
+
+            @Override
+            public void onFailedToReceiveAd(Ad arg0) {
+                loadNativeAd();
+            }
+        };
+
+        startAppNativeAd.loadAd(nativePrefs, adListener);
     }
 }

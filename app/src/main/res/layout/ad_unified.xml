@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/primary_black">
@@ -8,7 +9,8 @@
     <com.google.android.gms.ads.nativead.NativeAdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -49,77 +51,39 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <com.google.android.gms.ads.nativead.MediaView
-                                android:id="@+id/ad_media"
-                                android:layout_width="match_parent"
-                                android:layout_height="150dp"
-                                android:layout_marginTop="5dp" />
+                            <ImageView
+                                android:id="@+id/ad_app_icon"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_gravity="center_vertical"
+                                android:adjustViewBounds="true"
+                                android:paddingEnd="5dp"
+                                android:paddingBottom="5dp"
+                                tools:ignore="ContentDescription" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:orientation="horizontal">
+                                android:orientation="vertical"
+                                android:paddingLeft="8dp">
 
-                                <ImageView
-                                    android:id="@+id/ad_app_icon"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:adjustViewBounds="true"
-                                    android:paddingEnd="5dp"
-                                    android:paddingBottom="5dp"
-                                    tools:ignore="ContentDescription" />
-
-                                <LinearLayout
+                                <TextView
+                                    android:id="@+id/ad_headline"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:paddingLeft="8dp">
+                                    android:textColor="@color/primary_white"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
 
-                                    <TextView
-                                        android:id="@+id/ad_headline"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/primary_white"
-                                        android:textSize="16sp"
-                                        android:textStyle="bold" />
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content">
-
-                                        <TextView
-                                            android:id="@+id/ad_advertiser"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:gravity="bottom"
-
-                                            android:textColor="@color/primary_white"
-                                            android:textSize="14sp" />
-
-                                        <RatingBar
-                                            android:id="@+id/ad_stars"
-                                            style="?android:attr/ratingBarStyleSmall"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:isIndicator="true"
-                                            android:numStars="5"
-                                            android:stepSize="0.5" />
-
-                                    </LinearLayout>
-
-                                    <TextView
-                                        android:id="@+id/ad_body"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="20dp"
-                                        android:textColor="@color/primary_white"
-                                        android:textSize="12sp" />
-
-                                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/ad_body"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="20dp"
+                                    android:textColor="@color/primary_white"
+                                    android:textSize="12sp" />
 
                             </LinearLayout>
 
@@ -130,7 +94,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:layout_marginBottom="16dp"
+                            android:layout_marginBottom="8dp"
                             android:background="@drawable/rounded_button"
                             android:gravity="center"
                             android:textColor="@color/white"
@@ -145,11 +109,5 @@
         </androidx.cardview.widget.CardView>
 
     </com.google.android.gms.ads.nativead.NativeAdView>
-
-    <ImageView
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignParentEnd="true"
-        android:background="@color/primary_black" />
 
 </RelativeLayout>
