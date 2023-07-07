@@ -40,6 +40,7 @@ import com.startapp.sdk.ads.nativead.NativeAdDetails;
 import com.startapp.sdk.ads.nativead.NativeAdPreferences;
 import com.startapp.sdk.ads.nativead.StartAppNativeAd;
 import com.startapp.sdk.adsbase.Ad;
+import com.startapp.sdk.adsbase.StartAppAd;
 import com.startapp.sdk.adsbase.adlisteners.AdEventListener;
 
 import java.lang.reflect.Type;
@@ -60,6 +61,7 @@ public class MainActivity extends BaseActivity {
     String supportEmail = "chat.speakwiseai@gmail.com";
     String appPlayStoreLink;
     Common common = Common.getInstance();
+    StartAppAd startAppAd = new StartAppAd(this);
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -136,6 +138,7 @@ public class MainActivity extends BaseActivity {
         });
 
         initGooglePlayAppReviewDialog();
+        (new Handler()).postDelayed(() -> startAppAd.showAd(), 1000);
     }
 
     private void initGooglePlayAppReviewDialog() {

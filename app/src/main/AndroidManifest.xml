@@ -21,9 +21,6 @@
             android:name="com.startapp.sdk.APPLICATION_ID"
             android:value="206104098" />
 
-        <meta-data
-            android:name="com.startapp.sdk.RETURN_ADS_ENABLED"
-            android:value="false" />
 
         <receiver
             android:name=".app.Utils.AppWidgetSmall"

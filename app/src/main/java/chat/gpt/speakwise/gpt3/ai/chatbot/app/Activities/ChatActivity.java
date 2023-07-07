@@ -113,6 +113,8 @@ public class ChatActivity extends BaseActivity {
         if (getIntent().getBooleanExtra("fromWidget", false)) {
             FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("widget_clicked", null);
         }
+
+        (new Handler()).postDelayed(() -> startAppAd.showAd(), 1000);
     }
 
     private void loadFullScreenAd() {
@@ -173,6 +175,10 @@ public class ChatActivity extends BaseActivity {
         binding.messageEditText.setText("");
         callAPI();
         binding.welcomeText.setVisibility(View.GONE);
+
+        if (messageList.size() % 3 == 0) {
+            loadInterstitialAd();
+        }
     }
 
     @Override
