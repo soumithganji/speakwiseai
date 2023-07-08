@@ -24,7 +24,6 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.startapp.sdk.adsbase.StartAppAd;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,7 +66,7 @@ public class ChatActivity extends BaseActivity {
 
     private Handler handlerFullScreen;
     private Handler handlerBanner;
-    private StartAppAd startAppAd = new StartAppAd(this);
+//    private StartAppAd startAppAd = new StartAppAd(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +81,7 @@ public class ChatActivity extends BaseActivity {
         handlerFullScreen = new Handler();
         handlerBanner = new Handler();
 
-        loadFullScreenAd();
+//        loadFullScreenAd();
         initBannerChat();
 
         timeStamp = getIntent().getStringExtra("timeStamp");
@@ -114,7 +113,7 @@ public class ChatActivity extends BaseActivity {
             FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("widget_clicked", null);
         }
 
-        (new Handler()).postDelayed(() -> startAppAd.showAd(), 1000);
+//        (new Handler()).postDelayed(() -> startAppAd.showAd(), 1000);
     }
 
     private void loadFullScreenAd() {
@@ -125,7 +124,7 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void initBannerChat() {
-        binding.adView.loadAd();
+//        binding.adView.loadAd();
 //        AdRequest adRequest = new AdRequest.Builder().build();
 //        binding.adView.loadAd(adRequest);
 //        handlerBanner.postDelayed(this::initBannerChat, 30000);
@@ -136,7 +135,7 @@ public class ChatActivity extends BaseActivity {
         llm.setStackFromEnd(true);
         binding.recyclerView.setLayoutManager(llm);
         binding.recyclerView.setItemAnimator(null);
-        messageAdapter = new MessageAdapter(this, messageList, startAppAd);
+        messageAdapter = new MessageAdapter(this, messageList);
         binding.recyclerView.setAdapter(messageAdapter);
 
         String chatString = common.getChats(this, timeStamp);
@@ -333,7 +332,7 @@ public class ChatActivity extends BaseActivity {
     }
 
     public void loadInterstitialAd() {
-        startAppAd.showAd();
+//        startAppAd.showAd();
     }
 
     @Override

@@ -36,12 +36,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.startapp.sdk.ads.nativead.NativeAdDetails;
-import com.startapp.sdk.ads.nativead.NativeAdPreferences;
-import com.startapp.sdk.ads.nativead.StartAppNativeAd;
-import com.startapp.sdk.adsbase.Ad;
-import com.startapp.sdk.adsbase.StartAppAd;
-import com.startapp.sdk.adsbase.adlisteners.AdEventListener;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -61,7 +55,7 @@ public class MainActivity extends BaseActivity {
     String supportEmail = "chat.speakwiseai@gmail.com";
     String appPlayStoreLink;
     Common common = Common.getInstance();
-    StartAppAd startAppAd = new StartAppAd(this);
+//    StartAppAd startAppAd = new StartAppAd(this);
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -85,7 +79,7 @@ public class MainActivity extends BaseActivity {
             window.setStatusBarColor(getColor(R.color.primary_black));
         }
 
-        loadAd();
+//        loadAd();
 
         FirebaseApp.initializeApp(this);
         FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
@@ -138,7 +132,7 @@ public class MainActivity extends BaseActivity {
         });
 
         initGooglePlayAppReviewDialog();
-        (new Handler()).postDelayed(() -> startAppAd.showAd(), 1000);
+//        (new Handler()).postDelayed(() -> startAppAd.showAd(), 1000);
     }
 
     private void initGooglePlayAppReviewDialog() {
@@ -387,40 +381,40 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadNativeAd() {
-        StartAppNativeAd startAppNativeAd = new StartAppNativeAd(this);
-
-        NativeAdPreferences nativePrefs = new NativeAdPreferences()
-                .setAdsNumber(1)
-                .setAutoBitmapDownload(true)
-                .setPrimaryImageSize(2);
-        AdEventListener adListener = new AdEventListener() {
-            @Override
-            public void onReceiveAd(Ad arg0) {
-                ArrayList<NativeAdDetails> ads = startAppNativeAd.getNativeAds();
-
-                if (ads.isEmpty()) {
-                    return;
-                }
-
-                binding.adLayout.adView.setVisibility(View.VISIBLE);
-
-                NativeAdDetails nativeAdDetails = ads.get(0);
-
-                binding.adLayout.adHeadline.setText(nativeAdDetails.getTitle());
-                binding.adLayout.adBody.setText(nativeAdDetails.getDescription());
-                binding.adLayout.adAppIcon.setImageBitmap(nativeAdDetails.getImageBitmap());
-                binding.adLayout.adCallToAction.setText(nativeAdDetails.isApp() ? "Install" : "Open");
-
-                nativeAdDetails.registerViewForInteraction(binding.adLayout.adView);
-                nativeAdDetails.registerViewForInteraction(binding.adLayout.adCallToAction);
-            }
-
-            @Override
-            public void onFailedToReceiveAd(Ad arg0) {
-
-            }
-        };
-
-        startAppNativeAd.loadAd(nativePrefs, adListener);
+//        StartAppNativeAd startAppNativeAd = new StartAppNativeAd(this);
+//
+//        NativeAdPreferences nativePrefs = new NativeAdPreferences()
+//                .setAdsNumber(1)
+//                .setAutoBitmapDownload(true)
+//                .setPrimaryImageSize(2);
+//        AdEventListener adListener = new AdEventListener() {
+//            @Override
+//            public void onReceiveAd(Ad arg0) {
+//                ArrayList<NativeAdDetails> ads = startAppNativeAd.getNativeAds();
+//
+//                if (ads.isEmpty()) {
+//                    return;
+//                }
+//
+//                binding.adLayout.adView.setVisibility(View.VISIBLE);
+//
+//                NativeAdDetails nativeAdDetails = ads.get(0);
+//
+//                binding.adLayout.adHeadline.setText(nativeAdDetails.getTitle());
+//                binding.adLayout.adBody.setText(nativeAdDetails.getDescription());
+//                binding.adLayout.adAppIcon.setImageBitmap(nativeAdDetails.getImageBitmap());
+//                binding.adLayout.adCallToAction.setText(nativeAdDetails.isApp() ? "Install" : "Open");
+//
+//                nativeAdDetails.registerViewForInteraction(binding.adLayout.adView);
+//                nativeAdDetails.registerViewForInteraction(binding.adLayout.adCallToAction);
+//            }
+//
+//            @Override
+//            public void onFailedToReceiveAd(Ad arg0) {
+//
+//            }
+//        };
+//
+//        startAppNativeAd.loadAd(nativePrefs, adListener);
     }
 }

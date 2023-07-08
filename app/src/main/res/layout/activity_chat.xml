@@ -29,7 +29,7 @@
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/adView"
+            android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -104,12 +104,12 @@
 
         </LinearLayout>
 
-        <com.startapp.sdk.ads.banner.Banner
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+        <!--        <com.startapp.sdk.ads.banner.Banner-->
+        <!--            android:id="@+id/adView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentBottom="true"-->
+        <!--            android:layout_centerHorizontal="true" />-->
 
     </RelativeLayout>
 

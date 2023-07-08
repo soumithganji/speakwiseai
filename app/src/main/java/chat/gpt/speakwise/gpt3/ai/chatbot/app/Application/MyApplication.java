@@ -21,9 +21,6 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.appopen.AppOpenAd;
 import com.google.android.gms.ads.appopen.AppOpenAd.AppOpenAdLoadCallback;
-import com.startapp.sdk.adsbase.AutoInterstitialPreferences;
-import com.startapp.sdk.adsbase.StartAppAd;
-import com.startapp.sdk.adsbase.StartAppSDK;
 
 import java.util.Date;
 
@@ -39,15 +36,15 @@ public class MyApplication extends Application
         super.onCreate();
         this.registerActivityLifecycleCallbacks(this);
 
-        StartAppSDK.init(this, "206104098", true);
-        StartAppAd.disableSplash();
-        StartAppAd.setAutoInterstitialPreferences(
-                new AutoInterstitialPreferences()
-                        .setActivitiesBetweenAds(0)
-        );
-
-        MobileAds.initialize(this, initializationStatus -> {
-        });
+//        StartAppSDK.init(this, "206104098", true);
+//        StartAppAd.disableSplash();
+//        StartAppAd.setAutoInterstitialPreferences(
+//                new AutoInterstitialPreferences()
+//                        .setActivitiesBetweenAds(0)
+//        );
+//
+//        MobileAds.initialize(this, initializationStatus -> {
+//        });
 
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
         appOpenAdManager = new AppOpenAdManager();

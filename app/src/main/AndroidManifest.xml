@@ -17,9 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWiseAI">
 
-        <meta-data
-            android:name="com.startapp.sdk.APPLICATION_ID"
-            android:value="206104098" />
+<!--        <meta-data-->
+<!--            android:name="com.startapp.sdk.APPLICATION_ID"-->
+<!--            android:value="206104098" />-->
 
 
         <receiver
