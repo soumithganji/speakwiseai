@@ -242,11 +242,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initBuyMeACoffee() {
-        String buyMeACoffee = "https://www.buymeacoffee.com/speakwiseai";
-        Uri webUri = Uri.parse(buyMeACoffee);
-        Intent intent = new Intent(Intent.ACTION_VIEW, webUri);
-        startActivity(intent);
-        FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("buy_me_a_coffee_clicked", null);
+        try {
+            String buyMeACoffee = "https://www.buymeacoffee.com/speakwiseai";
+            Uri webUri = Uri.parse(buyMeACoffee);
+            Intent intent = new Intent(Intent.ACTION_VIEW, webUri);
+            startActivity(intent);
+            FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("buy_me_a_coffee_clicked", null);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Unable to open", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initChatRecyclerView() {
@@ -395,7 +399,6 @@ public class MainActivity extends BaseActivity {
                 ArrayList<NativeAdDetails> ads = startAppNativeAd.getNativeAds();
 
                 if (ads.isEmpty()) {
-                    loadNativeAd();
                     return;
                 }
 
@@ -414,7 +417,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onFailedToReceiveAd(Ad arg0) {
-                loadNativeAd();
+
             }
         };
 
