@@ -16,7 +16,7 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivitySplashBinding;
 public class SplashActivity extends BaseActivity {
 
     ActivitySplashBinding binding;
-    private static final long COUNTER_TIME = 4;
+    private static final long COUNTER_TIME = 2;
     private static final String ONESIGNAL_APP_ID = "6a096862-307e-41c9-b467-937ac9b51987";
 
     @Override
