@@ -1,27 +1,27 @@
 package chat.gpt.speakwise.gpt3.ai.chatbot.app.Activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
@@ -111,9 +111,40 @@ public class ChatActivity extends BaseActivity {
 
         if (getIntent().getBooleanExtra("fromWidget", false)) {
             FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("widget_clicked", null);
+            checkAppUpdate();
         }
 
 //        (new Handler()).postDelayed(() -> startAppAd.showAd(), 1000);
+    }
+
+    private void checkAppUpdate() {
+        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(getApplicationContext());
+        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                showUpdateDialog();
+            }
+        });
+    }
+
+    private void showUpdateDialog() {
+        String appPlayStoreLink = "https://play.google.com/store/apps/details?id=" + getPackageName();
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View customView = getLayoutInflater().inflate(R.layout.app_update_dialog, null);
+            builder.setView(customView);
+
+            customView.findViewById(R.id.cwYes).setOnClickListener(v -> {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(appPlayStoreLink));
+                startActivity(browserIntent);
+            });
+
+            builder.setCancelable(false);
+
+            builder.show();
+        } catch (Exception ignored) {
+
+        }
     }
 
     private void loadFullScreenAd() {
