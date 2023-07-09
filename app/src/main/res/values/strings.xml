@@ -14,4 +14,25 @@
     <string name="widget_new_chat">+  New Chat</string>
     <string name="change_app_language">Change App Language</string>
     <string name="go_premium">Go Premium</string>
+    <string name="free_trial_days">First 3 days free,\nthen</string>
+    <string name="per_week">/week</string>
+    <string name="per_month">/month</string>
+    <string name="per_year">/year</string>
+    <string name="start_free_trial">Start Free Trial</string>
+    <string name="btn_continue">Continue</string>
+    <string name="save_75">Save 75%</string>
+    <string name="save_50">Save 50%</string>
+    <string name="save_66">Save 66%</string>
+    <string name="powered_by_chatgpt">Powered by ChatGPT</string>
+    <string name="latest_chatgpt_ai_model">Latest ChatGPT AI Model</string>
+    <string name="higher_word_limit">Higher Word Limit</string>
+    <string name="type_longer_messages">Type Longer Messages</string>
+    <string name="unlimited_prompts">Unlimited Prompts</string>
+    <string name="get_unlimited_answers">Get Unlimited Answers</string>
+    <string name="no_ads">No Ads</string>
+    <string name="absolute_ad_free_experience">Absolute Ad-Free Experience</string>
+    <string name="lightning_fast">Lightning Fast</string>
+    <string name="fastest_response_time_ever">Fastest Response Time Ever</string>
+    <string name="you_are_on_premium">You are on Premium</string>
+    <string name="unlock_unlimited_access">Unlock Unlimited Access</string>
 </resources>

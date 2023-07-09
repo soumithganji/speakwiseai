@@ -134,7 +134,7 @@ public class MainActivity extends BaseActivity {
         initGooglePlayAppReviewDialog();
 
         if (common.isUserPaid()) {
-            binding.tvTextPremium.setText("You are on Premium");
+            binding.tvTextPremium.setText(R.string.you_are_on_premium);
         } else {
             new Handler().postDelayed(() -> common.showSubscriptionPage(this), 1000);
         }

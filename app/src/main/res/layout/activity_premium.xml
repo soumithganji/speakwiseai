@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Unlock Unlimited Access"
+                android:text="@string/unlock_unlimited_access"
                 android:textColor="@color/primary_white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -105,7 +105,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Powered by ChatGPT"
+                        android:text="@string/powered_by_chatgpt"
                         android:textColor="@color/primary_white"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -113,7 +113,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Latest ChatGPT AI Model"
+                        android:text="@string/latest_chatgpt_ai_model"
                         android:textColor="@color/primary_white"
                         android:textSize="17sp" />
 
@@ -148,7 +148,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Higher Word Limit"
+                        android:text="@string/higher_word_limit"
                         android:textColor="@color/primary_white"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -156,7 +156,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Type Longer Messages"
+                        android:text="@string/type_longer_messages"
                         android:textColor="@color/primary_white"
                         android:textSize="17sp" />
 
@@ -191,7 +191,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Unlimited Prompts"
+                        android:text="@string/unlimited_prompts"
                         android:textColor="@color/primary_white"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -199,7 +199,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Get Unlimited Answers"
+                        android:text="@string/get_unlimited_answers"
                         android:textColor="@color/primary_white"
                         android:textSize="17sp" />
 
@@ -234,7 +234,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No Ads"
+                        android:text="@string/no_ads"
                         android:textColor="@color/primary_white"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -242,7 +242,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Absolute Ad-Free Experience"
+                        android:text="@string/absolute_ad_free_experience"
                         android:textColor="@color/primary_white"
                         android:textSize="17sp" />
 
@@ -277,7 +277,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Lightning Fast"
+                        android:text="@string/lightning_fast"
                         android:textColor="@color/primary_white"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -285,7 +285,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fastest Response Time Ever"
+                        android:text="@string/fastest_response_time_ever"
                         android:textColor="@color/primary_white"
                         android:textSize="17sp" />
 
@@ -367,7 +367,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="Save 50%"
+                                android:text="@string/save_50"
                                 android:textColor="@color/primary_black"
                                 android:textSize="16sp" />
 
@@ -441,7 +441,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="Save 66%"
+                                android:text="@string/save_66"
                                 android:textColor="@color/primary_black"
                                 android:textSize="16sp" />
 
@@ -515,7 +515,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="Save 75%"
+                                android:text="@string/save_75"
                                 android:textColor="@color/primary_black"
                                 android:textSize="16sp" />
 
@@ -556,7 +556,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
                     android:gravity="center"
-                    android:text="Start Free Trial"
+                    android:text="@string/start_free_trial"
                     android:textColor="@color/primary_white"
                     android:textSize="16sp" />
 

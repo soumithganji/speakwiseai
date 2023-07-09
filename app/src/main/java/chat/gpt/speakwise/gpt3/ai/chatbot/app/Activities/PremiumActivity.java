@@ -61,18 +61,16 @@ public class PremiumActivity extends BaseActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initButtonListeners() {
-        binding.tvWeekly.setText("First 3 days free,\nthen " + billingClientLifecycle.getPlanPrice(Common.BASIC_WEEKLY_PLAN) + " /week");
-        binding.tvMonthly.setText(billingClientLifecycle.getPlanPrice(Common.BASIC_MONTHLY_PLAN) + " /month");
-        binding.tvYearly.setText(billingClientLifecycle.getPlanPrice(Common.BASIC_YEARLY_PLAN) + " /year");
+        binding.tvWeekly.setText(getString(R.string.free_trial_days) + " " + billingClientLifecycle.getPlanPrice(Common.BASIC_WEEKLY_PLAN) + " " + getString(R.string.per_week));
+        binding.tvMonthly.setText(billingClientLifecycle.getPlanPrice(Common.BASIC_MONTHLY_PLAN) + " " + getString(R.string.per_month));
+        binding.tvYearly.setText(billingClientLifecycle.getPlanPrice(Common.BASIC_YEARLY_PLAN) + " " + getString(R.string.per_year));
 
         binding.cwWeekly.setOnClickListener(v -> {
             binding.cwWeekly.setCardBackgroundColor(getColor(R.color.primary_green));
             binding.cwMonthly.setCardBackgroundColor(getColor(R.color.primary_white));
             binding.cwYearly.setCardBackgroundColor(getColor(R.color.primary_white));
 
-            //show  plan text as '3 days free trial, {price}/week later' if free trial is available for user
-            //show 'continue' button text as Start Free Trial Only if free trial is available for user
-            binding.tvContinue.setText("Start Free Trial");
+            binding.tvContinue.setText(R.string.start_free_trial);
             selectedPlan = PLAN_WEEKLY;
         });
 
@@ -81,7 +79,7 @@ public class PremiumActivity extends BaseActivity {
             binding.cwMonthly.setCardBackgroundColor(getColor(R.color.primary_green));
             binding.cwYearly.setCardBackgroundColor(getColor(R.color.primary_white));
 
-            binding.tvContinue.setText("Continue");
+            binding.tvContinue.setText(getString(R.string.btn_continue));
             selectedPlan = PLAN_MONTHLY;
         });
 
@@ -90,7 +88,7 @@ public class PremiumActivity extends BaseActivity {
             binding.cwMonthly.setCardBackgroundColor(getColor(R.color.primary_white));
             binding.cwYearly.setCardBackgroundColor(getColor(R.color.primary_green));
 
-            binding.tvContinue.setText("Continue");
+            binding.tvContinue.setText(getString(R.string.btn_continue));
             selectedPlan = PLAN_YEARLY;
         });
 

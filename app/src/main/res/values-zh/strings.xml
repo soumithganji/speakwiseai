@@ -5,7 +5,7 @@
     <string name="powered_by_gpt_3">由 GPT-3 提供支持。智言 AI 可能无意中传播错误信息或误解。</string>
     <string name="new_chat">新聊天</string>
     <string name="clear_chats">清除聊天记录</string>
-    <string name="provide_feedback">提供反馈</string>
+    <string name="provide_feedback">联系我们</string>
     <string name="rate_app">评价应用</string>
     <string name="share_with_friends">与朋友分享</string>
     <string name="powered_by_gpt_3_main_screen">由 ChatGPT 提供支持</string>
@@ -15,4 +15,25 @@
     <string name="widget_new_chat">+  新聊天</string>
     <string name="change_app_language">更改应用语言</string>
     <string name="go_premium">升级至高级版</string>
+    <string name="free_trial_days">前3天免费，\n</string>
+    <string name="per_week">/周</string>
+    <string name="per_month">/月</string>
+    <string name="per_year">/年</string>
+    <string name="start_free_trial">开始免费试用</string>
+    <string name="btn_continue">继续</string>
+    <string name="save_75">节省75%</string>
+    <string name="save_50">节省50%</string>
+    <string name="save_66">节省66%</string>
+    <string name="powered_by_chatgpt">由ChatGPT提供动力</string>
+    <string name="latest_chatgpt_ai_model">最新的ChatGPT人工智能模型</string>
+    <string name="higher_word_limit">更高的字数限制</string>
+    <string name="type_longer_messages">输入更长的消息</string>
+    <string name="unlimited_prompts">无限提示</string>
+    <string name="get_unlimited_answers">获得无限答案</string>
+    <string name="no_ads">无广告</string>
+    <string name="absolute_ad_free_experience">绝对无广告体验</string>
+    <string name="lightning_fast">闪电般快速</string>
+    <string name="fastest_response_time_ever">有史以来最快的响应时间</string>
+    <string name="you_are_on_premium">您正在使用高级版</string>
+    <string name="unlock_unlimited_access">解锁无限访问</string>
 </resources>

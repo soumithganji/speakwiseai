@@ -98,7 +98,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:gravity="center"
-                                        android:text="Save 75%"
+                                        android:text="@string/save_75"
                                         android:textColor="@color/primary_black"
                                         android:textSize="16sp" />
 
