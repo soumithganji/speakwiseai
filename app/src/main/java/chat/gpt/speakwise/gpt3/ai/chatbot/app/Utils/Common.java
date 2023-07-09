@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.CallBacks.OnPreferencesClearedListener;
@@ -27,6 +28,13 @@ public class Common {
     private static long free_max_tokens = 3000;
     private static boolean free_unlimited_tokens = false;
     private static double temperature = 1;
+    private static boolean userPaid = false;
+
+    public static final String BASIC_PRODUCT = "speakwise_subscription";
+
+    public static final String BASIC_WEEKLY_PLAN = "speakwiseweekly";
+    public static final String BASIC_MONTHLY_PLAN = "speakwisemonthly";
+    public static final String BASIC_YEARLY_PLAN = "speakwiseyearly";
 
     public static Common getInstance() {
         if (single_instance == null)
@@ -57,6 +65,14 @@ public class Common {
 
     public void setTemperature(double temperature) {
         Common.temperature = temperature;
+    }
+
+    public static boolean isUserPaid() {
+        return userPaid;
+    }
+
+    public static void setUserPaid(boolean isPaid) {
+        Common.userPaid = isPaid;
     }
 
     public boolean hasInternetConnection(Activity activity) {
@@ -205,5 +221,10 @@ public class Common {
         editor.apply();
 
         new Handler().post(listener::onPreferencesCleared);
+    }
+
+    public String getCurrencySymbol(String currencyCode) {
+        Currency currency = Currency.getInstance(currencyCode);
+        return "" + currency.getSymbol();
     }
 }

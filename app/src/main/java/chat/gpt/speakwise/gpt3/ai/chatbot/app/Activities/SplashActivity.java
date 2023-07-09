@@ -4,19 +4,21 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.onesignal.OneSignal;
 
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Application.MyApplication;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.BillingClientLifecycle;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivitySplashBinding;
 
 public class SplashActivity extends BaseActivity {
 
     ActivitySplashBinding binding;
-    private static final long COUNTER_TIME = 2;
+    private static final long COUNTER_TIME = 1;
     private static final String ONESIGNAL_APP_ID = "6a096862-307e-41c9-b467-937ac9b51987";
 
     @Override
@@ -30,9 +32,9 @@ public class SplashActivity extends BaseActivity {
             window.setStatusBarColor(getColor(R.color.primary_white));
         }
 
-        createTimer(COUNTER_TIME);
-
         initOneSignal();
+
+        getPurchases();
     }
 
     private void initOneSignal() {
@@ -40,25 +42,22 @@ public class SplashActivity extends BaseActivity {
         OneSignal.setAppId(ONESIGNAL_APP_ID);
     }
 
-    private void createTimer(long seconds) {
-        CountDownTimer countDownTimer =
-                new CountDownTimer(seconds * 1000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
+    private void getPurchases() {
+        BillingClientLifecycle billingClientLifecycle = BillingClientLifecycle.getInstance(getApplication());
+        getLifecycle().addObserver(billingClientLifecycle);
+        billingClientLifecycle.purchases.observe(this, purchases -> {
+            //the below is assumption is not valid, find another merthod
 
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        Application application = getApplication();
-                        if (!(application instanceof MyApplication)) {
-                            startMainActivity();
-                            return;
-                        }
-                        ((MyApplication) application).showAd(SplashActivity.this, () -> startMainActivity());
-                    }
-                };
-        countDownTimer.start();
+            //assumption: is purchases.size() == 0 free user, else paid user
+            Toast.makeText(getApplicationContext(), "" + purchases.size(), Toast.LENGTH_SHORT).show();
+            Common.setUserPaid(!purchases.isEmpty());
+            Application application = getApplication();
+            if (!(application instanceof MyApplication)) {
+                startMainActivity();
+                return;
+            }
+            ((MyApplication) application).showAd(SplashActivity.this, () -> startMainActivity());
+        });
     }
 
     public void startMainActivity() {

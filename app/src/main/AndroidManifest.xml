@@ -16,12 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWiseAI">
-
-<!--        <meta-data-->
-<!--            android:name="com.startapp.sdk.APPLICATION_ID"-->
-<!--            android:value="206104098" />-->
-
-
+        <activity
+            android:name=".app.Activities.PremiumActivity"
+            android:exported="false" />
+        <!-- <meta-data -->
+        <!-- android:name="com.startapp.sdk.APPLICATION_ID" -->
+        <!-- android:value="206104098" /> -->
         <receiver
             android:name=".app.Utils.AppWidgetSmall"
             android:exported="false">
@@ -33,7 +33,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/small_app_widget_info" />
         </receiver>
-
         <receiver
             android:name=".app.Utils.AppWidgetLarge"
             android:exported="false">

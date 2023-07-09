@@ -178,6 +178,8 @@ public class MainActivity extends BaseActivity {
     private void init(HashMap<String, String> manditoryUpdateMap) {
         appPlayStoreLink = "https://play.google.com/store/apps/details?id=" + getPackageName();
 
+        binding.cwSubscribePremium.setOnClickListener(v -> initPremiumPage());
+
         binding.cwBuyMeACoffee.setOnClickListener(v -> initBuyMeACoffee());
 
         binding.cwLanguage.setOnClickListener(v -> initLanguageChange());
@@ -200,6 +202,10 @@ public class MainActivity extends BaseActivity {
         }
 
         checkAppUpdate(manditoryUpdateMap);
+    }
+
+    private void initPremiumPage() {
+        startActivity(new Intent(this, PremiumActivity.class));
     }
 
     private void initLanguageChange() {
