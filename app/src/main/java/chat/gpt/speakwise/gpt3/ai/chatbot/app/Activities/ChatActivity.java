@@ -162,6 +162,11 @@ public class ChatActivity extends BaseActivity {
             return;
         }
 
+        if (!common.isUserPaid() && common.getResponseCount(this) >= 5) {
+            common.showSubscriptionPage(this);
+            return;
+        }
+
         String question = binding.messageEditText.getText().toString().trim();
         if (!messageList.isEmpty() && messageList.get(messageList.size() - 1).getMessage().equals("Typing...")) {
             return;
@@ -236,6 +241,7 @@ public class ChatActivity extends BaseActivity {
                 common.saveTimeStamp(this, date, messageList.get(0).getMessage());
             }
             common.saveChats(this, common.convertObjectListToString(tempList), date);
+            common.increaseResponseCount(this);
         }
         addToChat(response, Message.SENT_BY_BOT);
     }
@@ -259,8 +265,10 @@ public class ChatActivity extends BaseActivity {
             }
             jsonBody.put("temperature", common.getTemperature());
             jsonBody.put("messages", messages);
-            if (!common.isFree_unlimited_tokens()) {
-                jsonBody.put("max_tokens", common.getFree_max_tokens());
+            if (!common.isUserPaid()) {
+                if (!common.isFree_unlimited_tokens()) {
+                    jsonBody.put("max_tokens", common.getFree_max_tokens());
+                }
             }
         } catch (JSONException e) {
             FirebaseCrashlytics.getInstance().recordException(e);

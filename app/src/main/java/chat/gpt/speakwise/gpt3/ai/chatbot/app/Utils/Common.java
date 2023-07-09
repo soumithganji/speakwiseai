@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Activities.PremiumActivity;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.CallBacks.OnPreferencesClearedListener;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Models.Message;
 
@@ -31,7 +33,6 @@ public class Common {
     private static boolean userPaid = false;
 
     public static final String BASIC_PRODUCT = "speakwise_subscription";
-
     public static final String BASIC_WEEKLY_PLAN = "speakwiseweekly";
     public static final String BASIC_MONTHLY_PLAN = "speakwisemonthly";
     public static final String BASIC_YEARLY_PLAN = "speakwiseyearly";
@@ -67,11 +68,11 @@ public class Common {
         Common.temperature = temperature;
     }
 
-    public static boolean isUserPaid() {
+    public boolean isUserPaid() {
         return userPaid;
     }
 
-    public static void setUserPaid(boolean isPaid) {
+    public void setUserPaid(boolean isPaid) {
         Common.userPaid = isPaid;
     }
 
@@ -223,8 +224,27 @@ public class Common {
         new Handler().post(listener::onPreferencesCleared);
     }
 
+    public int getResponseCount(Activity activity) {
+        SharedPreferences prefs = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
+        return prefs.getInt("response_count", 0);
+    }
+
+    public void increaseResponseCount(Activity activity) {
+        int responseCount = getResponseCount(activity);
+        responseCount = responseCount + 1;
+
+        SharedPreferences prefs = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("response_count", responseCount);
+        editor.apply();
+    }
+
     public String getCurrencySymbol(String currencyCode) {
         Currency currency = Currency.getInstance(currencyCode);
         return "" + currency.getSymbol();
+    }
+
+    public void showSubscriptionPage(Activity activity) {
+        activity.startActivity(new Intent(activity, PremiumActivity.class));
     }
 }

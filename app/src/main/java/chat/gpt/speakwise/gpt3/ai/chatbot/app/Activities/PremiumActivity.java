@@ -1,6 +1,8 @@
 package chat.gpt.speakwise.gpt3.ai.chatbot.app.Activities;
 
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.Window;
 import androidx.annotation.RequiresApi;
 
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.CallBacks.SubscriptionSuccessCallBack;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.BillingClientLifecycle;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityPremiumBinding;
@@ -39,6 +42,13 @@ public class PremiumActivity extends BaseActivity {
         }
 
         billingClientLifecycle = BillingClientLifecycle.getInstance(getApplication());
+        billingClientLifecycle.setOnSubSuccessCallBack((SubscriptionSuccessCallBack) () -> {
+            PackageManager pm = getPackageManager();
+            Intent intent = pm.getLaunchIntentForPackage(getPackageName());
+            finishAffinity();
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+        });
         getLifecycle().addObserver(billingClientLifecycle);
 
         billingClientLifecycle.basicSubProductWithProductDetails.observe(this, productDetails -> {

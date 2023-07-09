@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.CallBacks.SubscriptionSuccessCallBack;
+
 public class BillingClientLifecycle implements LifecycleObserver, PurchasesUpdatedListener,
         BillingClientStateListener, ProductDetailsResponseListener, PurchasesResponseListener {
 
@@ -58,6 +60,7 @@ public class BillingClientLifecycle implements LifecycleObserver, PurchasesUpdat
 
     private Application app;
     private BillingClient billingClient;
+    private SubscriptionSuccessCallBack callBack;
 
     private BillingClientLifecycle(Application app) {
         this.app = app;
@@ -208,6 +211,7 @@ public class BillingClientLifecycle implements LifecycleObserver, PurchasesUpdat
                     Log.d(TAG, "onPurchasesUpdated: null purchase list");
                     processPurchases(null);
                 } else {
+                    callBack.onSuccess();
                     processPurchases(purchases);
                 }
                 break;
@@ -463,6 +467,10 @@ public class BillingClientLifecycle implements LifecycleObserver, PurchasesUpdat
                 Log.d(TAG, "acknowledgePurchase: " + responseCode + " " + debugMessage);
             }
         });
+    }
+
+    public void setOnSubSuccessCallBack(SubscriptionSuccessCallBack subscriptionSuccessCallBack) {
+        callBack = subscriptionSuccessCallBack;
     }
 
     private static class BillingResponse {

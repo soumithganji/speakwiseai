@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.onesignal.OneSignal;
 
@@ -18,7 +17,7 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivitySplashBinding;
 public class SplashActivity extends BaseActivity {
 
     ActivitySplashBinding binding;
-    private static final long COUNTER_TIME = 1;
+    Common common = new Common();
     private static final String ONESIGNAL_APP_ID = "6a096862-307e-41c9-b467-937ac9b51987";
 
     @Override
@@ -46,11 +45,7 @@ public class SplashActivity extends BaseActivity {
         BillingClientLifecycle billingClientLifecycle = BillingClientLifecycle.getInstance(getApplication());
         getLifecycle().addObserver(billingClientLifecycle);
         billingClientLifecycle.purchases.observe(this, purchases -> {
-            //the below is assumption is not valid, find another merthod
-
-            //assumption: is purchases.size() == 0 free user, else paid user
-            Toast.makeText(getApplicationContext(), "" + purchases.size(), Toast.LENGTH_SHORT).show();
-            Common.setUserPaid(!purchases.isEmpty());
+            common.setUserPaid(!purchases.isEmpty());
             Application application = getApplication();
             if (!(application instanceof MyApplication)) {
                 startMainActivity();

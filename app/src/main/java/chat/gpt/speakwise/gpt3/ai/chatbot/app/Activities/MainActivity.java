@@ -132,7 +132,12 @@ public class MainActivity extends BaseActivity {
         });
 
         initGooglePlayAppReviewDialog();
-//        (new Handler()).postDelayed(() -> startAppAd.showAd(), 1000);
+
+        if (common.isUserPaid()) {
+            binding.tvTextPremium.setText("You are on Premium");
+        } else {
+            new Handler().postDelayed(() -> common.showSubscriptionPage(this), 1000);
+        }
     }
 
     private void initGooglePlayAppReviewDialog() {
