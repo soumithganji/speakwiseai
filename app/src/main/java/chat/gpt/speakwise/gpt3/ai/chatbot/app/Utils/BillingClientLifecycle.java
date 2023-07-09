@@ -459,13 +459,10 @@ public class BillingClientLifecycle implements LifecycleObserver, PurchasesUpdat
         AcknowledgePurchaseParams params = AcknowledgePurchaseParams.newBuilder()
                 .setPurchaseToken(purchaseToken)
                 .build();
-        billingClient.acknowledgePurchase(params, new AcknowledgePurchaseResponseListener() {
-            @Override
-            public void onAcknowledgePurchaseResponse(BillingResult billingResult) {
-                int responseCode = billingResult.getResponseCode();
-                String debugMessage = billingResult.getDebugMessage();
-                Log.d(TAG, "acknowledgePurchase: " + responseCode + " " + debugMessage);
-            }
+        billingClient.acknowledgePurchase(params, billingResult -> {
+            int responseCode = billingResult.getResponseCode();
+            String debugMessage = billingResult.getDebugMessage();
+            Log.d(TAG, "acknowledgePurchase: " + responseCode + " " + debugMessage);
         });
     }
 
