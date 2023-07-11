@@ -31,6 +31,8 @@ import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.android.play.core.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.appcheck.FirebaseAppCheck;
+import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,7 +57,7 @@ public class MainActivity extends BaseActivity {
     String supportEmail = "chat.speakwiseai@gmail.com";
     String appPlayStoreLink;
     Common common = Common.getInstance();
-//    StartAppAd startAppAd = new StartAppAd(this);
+    //    StartAppAd startAppAd = new StartAppAd(this);
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -82,6 +84,8 @@ public class MainActivity extends BaseActivity {
 //        loadAd();
 
         FirebaseApp.initializeApp(this);
+        FirebaseAppCheck firebaseAppCheck = FirebaseAppCheck.getInstance();
+        firebaseAppCheck.installAppCheckProviderFactory(PlayIntegrityAppCheckProviderFactory.getInstance());
         FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
 

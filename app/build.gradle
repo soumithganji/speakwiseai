@@ -84,6 +84,9 @@ dependencies {
     //google play billing
     implementation "com.android.billingclient:billing:6.0.1"
 
+    //google play integrity
+    implementation "com.google.firebase:firebase-appcheck-playintegrity"
+
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-runtime:2.5.1"
     implementation 'androidx.lifecycle:lifecycle-process:2.5.1'
