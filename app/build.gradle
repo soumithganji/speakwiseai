@@ -23,7 +23,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "OPENAIKEY", "\"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\""
+        buildConfigField "String", "SECRET", "\"WSJHU&X%vj3Q%mf-XTvXZ8ybT\""
 
         resConfigs "en", "zh"
     }

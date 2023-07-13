@@ -120,6 +120,12 @@ public class MainActivity extends BaseActivity {
                 } catch (Exception ignored) {
 
                 }
+                try {
+                    String key = documentSnapshot.getString("key");
+                    common.setKey(common.decrypt(BuildConfig.SECRET, key));
+                } catch (Exception ignored) {
+
+                }
 
                 HashMap<String, String> manditoryUpdateMap = (HashMap<String, String>) documentSnapshot.get("manditoryUpdatesMap");
                 init(manditoryUpdateMap);
@@ -327,7 +333,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(browserIntent);
             });
 
-            if (manditoryUpdateMap.containsValue(String.valueOf(BuildConfig.VERSION_CODE))) {
+            if (isMandatory(manditoryUpdateMap)) {
                 builder.setCancelable(false);
             }
 
@@ -335,6 +341,17 @@ public class MainActivity extends BaseActivity {
         } catch (Exception ignored) {
 
         }
+    }
+
+    private boolean isMandatory(HashMap<String, String> manditoryUpdateMap) {
+        int maxValue = Integer.MIN_VALUE;
+        for (String value : manditoryUpdateMap.values()) {
+            if (Integer.parseInt(value) > maxValue) {
+                maxValue = Integer.parseInt(value);
+            }
+        }
+
+        return BuildConfig.VERSION_CODE < maxValue;
     }
 
     private void initNewChat() {

@@ -311,7 +311,7 @@ public class ChatActivity extends BaseActivity {
         RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/chat/completions")
-                .header("Authorization", "Bearer " + BuildConfig.OPENAIKEY)
+                .header("Authorization", "Bearer " + common.getKey())
                 .post(body)
                 .build();
 

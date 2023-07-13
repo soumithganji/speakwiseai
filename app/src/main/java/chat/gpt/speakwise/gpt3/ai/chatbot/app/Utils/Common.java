@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.util.Base64;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -17,9 +18,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Activities.PremiumActivity;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.CallBacks.OnPreferencesClearedListener;
@@ -30,12 +35,15 @@ public class Common {
     private static long free_max_tokens = 3000;
     private static boolean free_unlimited_tokens = false;
     private static double temperature = 1;
+    private static String key = "";
     private static boolean userPaid = false;
 
     public static final String BASIC_PRODUCT = "speakwise_subscription";
     public static final String BASIC_WEEKLY_PLAN = "speakwiseweekly";
     public static final String BASIC_MONTHLY_PLAN = "speakwisemonthly";
     public static final String BASIC_YEARLY_PLAN = "speakwiseyearly";
+
+    private static final String AES = "AES";
 
     public static Common getInstance() {
         if (single_instance == null)
@@ -68,6 +76,14 @@ public class Common {
         Common.temperature = temperature;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        Common.key = key;
+    }
+
     public boolean isUserPaid() {
         return userPaid;
     }
@@ -97,6 +113,34 @@ public class Common {
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         editText.requestFocus();
         inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public SecretKeySpec generateKey(String message) throws Exception {
+        final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] bytes = message.getBytes("UTF-8");
+        digest.update(bytes, 0, bytes.length);
+        byte[] key = digest.digest();
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        return secretKeySpec;
+    }
+
+    public String encrypt(String secret, String keyRaw) throws Exception {
+        SecretKeySpec key = generateKey(secret);
+        Cipher c = Cipher.getInstance(AES);
+        c.init(Cipher.ENCRYPT_MODE, key);
+        byte[] encVal = c.doFinal(keyRaw.getBytes());
+        String encryptedValue = Base64.encodeToString(encVal, Base64.DEFAULT);
+        return encryptedValue;
+    }
+
+    public String decrypt(String secret, String encodedKey) throws Exception {
+        SecretKeySpec key = generateKey(secret);
+        Cipher c = Cipher.getInstance(AES);
+        c.init(Cipher.DECRYPT_MODE, key);
+        byte[] decodedValue = Base64.decode(encodedKey, Base64.DEFAULT);
+        byte[] decValue = c.doFinal(decodedValue);
+        String decryptedValue = new String(decValue);
+        return decryptedValue;
     }
 
     public String getChats(Activity activity, String timeStamp) {
