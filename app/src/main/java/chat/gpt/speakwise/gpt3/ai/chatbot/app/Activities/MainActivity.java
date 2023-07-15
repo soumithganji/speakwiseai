@@ -96,10 +96,18 @@ public class MainActivity extends BaseActivity {
             binding.spinKit.setVisibility(View.GONE);
             if (documentSnapshot.exists()) {
                 boolean block_free_users = documentSnapshot.getBoolean("block_free_users");
+                boolean temp_unblock_all = true;
 
-                if (block_free_users) {
-                    showBlockedDialog();
-                    return;
+                try {
+                    temp_unblock_all = documentSnapshot.getBoolean("temp_unblock_all");
+                } catch (Exception e) {
+
+                }
+                if (!temp_unblock_all) {
+                    if (block_free_users) {
+                        showBlockedDialog();
+                        return;
+                    }
                 }
 
                 try {
