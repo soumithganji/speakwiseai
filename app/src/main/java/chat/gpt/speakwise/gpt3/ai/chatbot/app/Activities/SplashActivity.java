@@ -45,7 +45,7 @@ public class SplashActivity extends BaseActivity {
         BillingClientLifecycle billingClientLifecycle = BillingClientLifecycle.getInstance(getApplication());
         getLifecycle().addObserver(billingClientLifecycle);
         billingClientLifecycle.purchases.observe(this, purchases -> {
-            common.setUserPaid(!purchases.isEmpty());
+            common.setUserPaid(purchases != null && !purchases.isEmpty());
             Application application = getApplication();
             if (!(application instanceof MyApplication)) {
                 startMainActivity();

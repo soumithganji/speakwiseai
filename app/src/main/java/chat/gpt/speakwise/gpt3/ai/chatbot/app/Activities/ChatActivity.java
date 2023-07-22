@@ -42,6 +42,7 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.BuildConfig;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Models.Message;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Adapters.MessageAdapter;
 import chat.gpt.speakwise.gpt3.ai.chatbot.R;
+import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.BillingClientLifecycle;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityChatBinding;
 import okhttp3.Call;
@@ -114,68 +115,76 @@ public class ChatActivity extends BaseActivity {
             FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("widget_clicked", null);
             checkAppUpdate();
 
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            DocumentReference docRef = db.collection("config").document("speakwiseai");
-
-            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    boolean block_free_users = documentSnapshot.getBoolean("block_free_users");
-                    boolean temp_unblock_all = true;
-
-                    try {
-                        temp_unblock_all = documentSnapshot.getBoolean("temp_unblock_all");
-                    } catch (Exception e) {
-
-                    }
-                    if (!temp_unblock_all) {
-                        if (block_free_users) {
-                            common.showBlockedDialog(ChatActivity.this);
-                            return;
-                        }
-                    }
-
-                    try {
-                        long free_max_tokens = documentSnapshot.getLong("free_max_tokens");
-                        common.setFree_max_tokens(free_max_tokens);
-                    } catch (Exception ignored) {
-
-                    }
-                    try {
-                        boolean free_unlimited_tokens = documentSnapshot.getBoolean("free_unlimited_tokens");
-                        common.setFree_unlimited_tokens(free_unlimited_tokens);
-                    } catch (Exception ignored) {
-
-                    }
-                    try {
-                        double temperature = documentSnapshot.getDouble("temperature");
-                        common.setTemperature(temperature);
-                    } catch (Exception ignored) {
-
-                    }
-                    try {
-                        String key = documentSnapshot.getString("key");
-                        common.setKey(common.decrypt(BuildConfig.SECRET, key));
-                    } catch (Exception ignored) {
-
-                    }
-
-                    binding.sendBtn.setOnClickListener((v) -> sendMessage());
-                } else {
-                    Toast.makeText(getApplicationContext(), "Something Went Wrong. Please Try Again Later", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(e -> {
-                if (!common.hasInternetConnection(this)) {
-                    Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Something Went Wrong. Please Try Again Later", Toast.LENGTH_SHORT).show();
-                }
+            BillingClientLifecycle billingClientLifecycle = BillingClientLifecycle.getInstance(getApplication());
+            getLifecycle().addObserver(billingClientLifecycle);
+            billingClientLifecycle.purchases.observe(this, purchases -> {
+                common.setUserPaid(purchases != null && !purchases.isEmpty());
+                getConfig();
             });
-
         } else {
             binding.sendBtn.setOnClickListener((v) -> sendMessage());
         }
 
 //        (new Handler()).postDelayed(() -> startAppAd.showAd(), 1000);
+    }
+
+    private void getConfig() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("config").document("speakwiseai");
+
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                boolean block_free_users = documentSnapshot.getBoolean("block_free_users");
+                boolean temp_unblock_all = true;
+
+                try {
+                    temp_unblock_all = documentSnapshot.getBoolean("temp_unblock_all");
+                } catch (Exception e) {
+
+                }
+                if (!temp_unblock_all) {
+                    if (block_free_users) {
+                        common.showBlockedDialog(ChatActivity.this);
+                        return;
+                    }
+                }
+
+                try {
+                    long free_max_tokens = documentSnapshot.getLong("free_max_tokens");
+                    common.setFree_max_tokens(free_max_tokens);
+                } catch (Exception ignored) {
+
+                }
+                try {
+                    boolean free_unlimited_tokens = documentSnapshot.getBoolean("free_unlimited_tokens");
+                    common.setFree_unlimited_tokens(free_unlimited_tokens);
+                } catch (Exception ignored) {
+
+                }
+                try {
+                    double temperature = documentSnapshot.getDouble("temperature");
+                    common.setTemperature(temperature);
+                } catch (Exception ignored) {
+
+                }
+                try {
+                    String key = documentSnapshot.getString("key");
+                    common.setKey(common.decrypt(BuildConfig.SECRET, key));
+                } catch (Exception ignored) {
+
+                }
+
+                binding.sendBtn.setOnClickListener((v) -> sendMessage());
+            } else {
+                Toast.makeText(getApplicationContext(), "Something Went Wrong. Please Try Again Later", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(e -> {
+            if (!common.hasInternetConnection(this)) {
+                Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Something Went Wrong. Please Try Again Later", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void checkAppUpdate() {
