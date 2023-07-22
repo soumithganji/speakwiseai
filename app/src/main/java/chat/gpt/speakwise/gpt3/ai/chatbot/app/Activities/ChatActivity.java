@@ -24,6 +24,8 @@ import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -107,11 +109,70 @@ public class ChatActivity extends BaseActivity {
 
         binding.btnVoice.setOnClickListener(v -> initTextToSpeech());
 
-        binding.sendBtn.setOnClickListener((v) -> sendMessage());
 
         if (getIntent().getBooleanExtra("fromWidget", false)) {
             FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("widget_clicked", null);
             checkAppUpdate();
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference docRef = db.collection("config").document("speakwiseai");
+
+            docRef.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    boolean block_free_users = documentSnapshot.getBoolean("block_free_users");
+                    boolean temp_unblock_all = true;
+
+                    try {
+                        temp_unblock_all = documentSnapshot.getBoolean("temp_unblock_all");
+                    } catch (Exception e) {
+
+                    }
+                    if (!temp_unblock_all) {
+                        if (block_free_users) {
+                            common.showBlockedDialog(ChatActivity.this);
+                            return;
+                        }
+                    }
+
+                    try {
+                        long free_max_tokens = documentSnapshot.getLong("free_max_tokens");
+                        common.setFree_max_tokens(free_max_tokens);
+                    } catch (Exception ignored) {
+
+                    }
+                    try {
+                        boolean free_unlimited_tokens = documentSnapshot.getBoolean("free_unlimited_tokens");
+                        common.setFree_unlimited_tokens(free_unlimited_tokens);
+                    } catch (Exception ignored) {
+
+                    }
+                    try {
+                        double temperature = documentSnapshot.getDouble("temperature");
+                        common.setTemperature(temperature);
+                    } catch (Exception ignored) {
+
+                    }
+                    try {
+                        String key = documentSnapshot.getString("key");
+                        common.setKey(common.decrypt(BuildConfig.SECRET, key));
+                    } catch (Exception ignored) {
+
+                    }
+
+                    binding.sendBtn.setOnClickListener((v) -> sendMessage());
+                } else {
+                    Toast.makeText(getApplicationContext(), "Something Went Wrong. Please Try Again Later", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(e -> {
+                if (!common.hasInternetConnection(this)) {
+                    Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Something Went Wrong. Please Try Again Later", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else {
+            binding.sendBtn.setOnClickListener((v) -> sendMessage());
         }
 
 //        (new Handler()).postDelayed(() -> startAppAd.showAd(), 1000);

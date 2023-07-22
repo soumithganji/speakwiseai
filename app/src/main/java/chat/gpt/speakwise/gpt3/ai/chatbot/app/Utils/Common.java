@@ -11,8 +11,12 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.util.Base64;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -26,6 +30,7 @@ import java.util.List;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
+import chat.gpt.speakwise.gpt3.ai.chatbot.R;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Activities.PremiumActivity;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.CallBacks.OnPreferencesClearedListener;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Models.Message;
@@ -290,5 +295,21 @@ public class Common {
 
     public void showSubscriptionPage(Activity activity) {
         activity.startActivity(new Intent(activity, PremiumActivity.class));
+    }
+
+    public void showBlockedDialog(Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        View customView = activity.getLayoutInflater().inflate(R.layout.app_update_dialog, null);
+        builder.setView(customView);
+
+        ((TextView) customView.findViewById(R.id.dialog_title)).setText("Oops!");
+
+        ((TextView) customView.findViewById(R.id.dialog_message)).setText("We're temporarily down. Hold tight! We will be back as soon as we can.");
+
+        customView.findViewById(R.id.llBottom).setVisibility(View.GONE);
+
+        builder.setCancelable(false);
+
+        builder.show();
     }
 }

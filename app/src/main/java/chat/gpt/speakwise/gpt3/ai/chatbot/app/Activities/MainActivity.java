@@ -105,7 +105,7 @@ public class MainActivity extends BaseActivity {
                 }
                 if (!temp_unblock_all) {
                     if (block_free_users) {
-                        showBlockedDialog();
+                        common.showBlockedDialog(MainActivity.this);
                         return;
                     }
                 }
@@ -182,21 +182,6 @@ public class MainActivity extends BaseActivity {
         loadNativeAd();
     }
 
-    private void showBlockedDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View customView = getLayoutInflater().inflate(R.layout.app_update_dialog, null);
-        builder.setView(customView);
-
-        ((TextView) customView.findViewById(R.id.dialog_title)).setText("Oops!");
-
-        ((TextView) customView.findViewById(R.id.dialog_message)).setText("We're temporarily down. Hold tight! We will be back as soon as we can.");
-
-        customView.findViewById(R.id.llBottom).setVisibility(View.GONE);
-
-        builder.setCancelable(false);
-
-        builder.show();
-    }
 
     private void init(HashMap<String, String> manditoryUpdateMap) {
         appPlayStoreLink = "https://play.google.com/store/apps/details?id=" + getPackageName();
