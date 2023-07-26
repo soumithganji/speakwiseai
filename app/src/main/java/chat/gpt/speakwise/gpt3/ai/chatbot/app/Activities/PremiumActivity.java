@@ -61,7 +61,7 @@ public class PremiumActivity extends BaseActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initButtonListeners() {
-        binding.tvWeekly.setText(getString(R.string.free_trial_days) + " " + billingClientLifecycle.getPlanPrice(Common.BASIC_WEEKLY_PLAN) + " " + getString(R.string.per_week));
+        binding.tvWeekly.setText(billingClientLifecycle.getPlanPrice(Common.BASIC_WEEKLY_PLAN) + " " + getString(R.string.per_week));
         binding.tvMonthly.setText(billingClientLifecycle.getPlanPrice(Common.BASIC_MONTHLY_PLAN) + " " + getString(R.string.per_month));
         binding.tvYearly.setText(billingClientLifecycle.getPlanPrice(Common.BASIC_YEARLY_PLAN) + " " + getString(R.string.per_year));
 
@@ -70,7 +70,6 @@ public class PremiumActivity extends BaseActivity {
             binding.cwMonthly.setCardBackgroundColor(getColor(R.color.primary_white));
             binding.cwYearly.setCardBackgroundColor(getColor(R.color.primary_white));
 
-            binding.tvContinue.setText(R.string.start_free_trial);
             selectedPlan = PLAN_WEEKLY;
         });
 
@@ -79,7 +78,6 @@ public class PremiumActivity extends BaseActivity {
             binding.cwMonthly.setCardBackgroundColor(getColor(R.color.primary_green));
             binding.cwYearly.setCardBackgroundColor(getColor(R.color.primary_white));
 
-            binding.tvContinue.setText(getString(R.string.btn_continue));
             selectedPlan = PLAN_MONTHLY;
         });
 
@@ -88,7 +86,6 @@ public class PremiumActivity extends BaseActivity {
             binding.cwMonthly.setCardBackgroundColor(getColor(R.color.primary_white));
             binding.cwYearly.setCardBackgroundColor(getColor(R.color.primary_green));
 
-            binding.tvContinue.setText(getString(R.string.btn_continue));
             selectedPlan = PLAN_YEARLY;
         });
 

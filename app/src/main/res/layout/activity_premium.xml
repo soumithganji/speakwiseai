@@ -566,7 +566,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
                     android:gravity="center"
-                    android:text="@string/start_free_trial"
+                    android:text="@string/btn_continue"
                     android:textColor="@color/primary_white"
                     android:textSize="16sp" />
 
