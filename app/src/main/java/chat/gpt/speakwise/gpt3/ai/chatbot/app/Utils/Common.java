@@ -23,8 +23,10 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.Date;
 import java.util.List;
 
 import javax.crypto.Cipher;
@@ -42,6 +44,7 @@ public class Common {
     private static double temperature = 1;
     private static String key = "";
     private static boolean userPaid = false;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     public static final String BASIC_PRODUCT = "speakwise_subscription";
     public static final String BASIC_WEEKLY_PLAN = "speakwiseweekly";
@@ -274,17 +277,19 @@ public class Common {
     }
 
     public int getResponseCount(Activity activity) {
+        Date date = new Date();
         SharedPreferences prefs = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
-        return prefs.getInt("response_count", 0);
+        return prefs.getInt("response_count" + simpleDateFormat.format(date), 0);
     }
 
     public void increaseResponseCount(Activity activity) {
+        Date date = new Date();
         int responseCount = getResponseCount(activity);
         responseCount = responseCount + 1;
 
         SharedPreferences prefs = activity.getSharedPreferences("speakwise", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("response_count", responseCount);
+        editor.putInt("response_count" + simpleDateFormat.format(date), responseCount);
         editor.apply();
     }
 

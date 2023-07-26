@@ -51,6 +51,7 @@ import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.Common;
 import chat.gpt.speakwise.gpt3.ai.chatbot.app.Utils.LinearLayoutManagerWrapper;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.ActivityMainBinding;
 import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.LanguageChangeDialogBinding;
+import chat.gpt.speakwise.gpt3.ai.chatbot.databinding.LimitsDialogBinding;
 
 public class MainActivity extends BaseActivity {
     ActivityMainBinding binding;
@@ -153,6 +154,7 @@ public class MainActivity extends BaseActivity {
 
         if (common.isUserPaid()) {
             binding.tvTextPremium.setText(R.string.you_are_on_premium);
+            binding.cwLimit.setVisibility(View.GONE);
         } else {
             new Handler().postDelayed(() -> common.showSubscriptionPage(this), 1000);
         }
@@ -188,6 +190,8 @@ public class MainActivity extends BaseActivity {
 
         binding.cwSubscribePremium.setOnClickListener(v -> initPremiumPage());
 
+        binding.cwLimit.setOnClickListener(v -> showLimitsDialog());
+
         binding.cwBuyMeACoffee.setOnClickListener(v -> initBuyMeACoffee());
 
         binding.cwLanguage.setOnClickListener(v -> initLanguageChange());
@@ -210,6 +214,15 @@ public class MainActivity extends BaseActivity {
         }
 
         checkAppUpdate(manditoryUpdateMap);
+    }
+
+    private void showLimitsDialog() {
+        Dialog dialog = new Dialog(this);
+        LimitsDialogBinding binding = LimitsDialogBinding.inflate(getLayoutInflater());
+        dialog.setContentView(binding.getRoot());
+        dialog.show();
+
+        binding.cwUpgrade.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PremiumActivity.class)));
     }
 
     private void initPremiumPage() {
@@ -441,5 +454,11 @@ public class MainActivity extends BaseActivity {
 //        };
 //
 //        startAppNativeAd.loadAd(nativePrefs, adListener);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.tvLimit.setText("" + (5 - common.getResponseCount(MainActivity.this)));
     }
 }

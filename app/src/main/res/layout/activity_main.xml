@@ -23,94 +23,146 @@
                     android:id="@+id/adLayout"
                     layout="@layout/ad_unified" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cwSubscribePremium"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="8dp"
-                    app:cardBackgroundColor="#4D4D4F"
-                    app:cardCornerRadius="8dp">
+                    android:layout_height="wrap_content">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cwSubscribePremium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="1dp"
-                        app:cardBackgroundColor="@color/primary_black"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_toLeftOf="@+id/cwLimit"
+                        app:cardBackgroundColor="#4D4D4F"
                         app:cardCornerRadius="8dp">
 
-                        <RelativeLayout
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="16dp">
+                            android:layout_margin="1dp"
+                            app:cardBackgroundColor="@color/primary_black"
+                            app:cardCornerRadius="8dp">
 
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/cwSubLogo"
-                                android:layout_width="wrap_content"
+                            <RelativeLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                app:cardBackgroundColor="@color/primary_black"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp">
+                                android:padding="16dp">
 
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_alignParentStart="true"
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/cwSubLogo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:padding="4dp"
-                                    android:src="@drawable/ic_premium" />
+                                    app:cardBackgroundColor="@color/primary_black"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp">
 
-                            </androidx.cardview.widget.CardView>
+                                    <ImageView
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        android:padding="4dp"
+                                        android:src="@drawable/ic_premium" />
 
-                            <TextView
-                                android:id="@+id/tvTextPremium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginStart="16dp"
-                                android:layout_toStartOf="@id/cwOfferTag"
-                                android:layout_toEndOf="@+id/cwSubLogo"
-                                android:text="@string/go_premium"
-                                android:textColor="@color/primary_white"
-                                android:textSize="16sp" />
+                                </androidx.cardview.widget.CardView>
+
+                                <TextView
+                                    android:id="@+id/tvTextPremium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_toStartOf="@id/cwOfferTag"
+                                    android:layout_toEndOf="@+id/cwSubLogo"
+                                    android:text="@string/go_premium"
+                                    android:textColor="@color/primary_white"
+                                    android:textSize="16sp" />
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/cwOfferTag"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    app:cardBackgroundColor="#FFDD00"
+                                    app:cardCornerRadius="8dp"
+                                    app:cardElevation="0dp">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="4dp"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:text="@string/save_75"
+                                            android:textColor="@color/primary_black"
+                                            android:textSize="16sp" />
+
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cwLimit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        app:cardBackgroundColor="#4D4D4F"
+                        app:cardCornerRadius="8dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="1dp"
+                            app:cardBackgroundColor="@color/primary_black"
+                            app:cardCornerRadius="8dp">
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cwOfferTag"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
-                                app:cardBackgroundColor="#FFDD00"
-                                app:cardCornerRadius="8dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="16dp"
+                                app:cardBackgroundColor="@color/primary_black"
                                 app:cardElevation="0dp">
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="4dp"
-                                    android:gravity="center">
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
 
                                     <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:id="@+id/tvLimit"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
                                         android:layout_gravity="center"
                                         android:gravity="center"
-                                        android:text="@string/save_75"
-                                        android:textColor="@color/primary_black"
-                                        android:textSize="16sp" />
+                                        android:textColor="@color/primary_white" />
 
                                 </LinearLayout>
 
                             </androidx.cardview.widget.CardView>
 
-                        </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
 
                     </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
