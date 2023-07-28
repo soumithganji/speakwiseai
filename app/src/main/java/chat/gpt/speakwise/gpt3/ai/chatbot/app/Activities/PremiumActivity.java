@@ -42,7 +42,7 @@ public class PremiumActivity extends BaseActivity {
         }
 
         billingClientLifecycle = BillingClientLifecycle.getInstance(getApplication());
-        billingClientLifecycle.setOnSubSuccessCallBack((SubscriptionSuccessCallBack) () -> {
+        billingClientLifecycle.setOnSubSuccessCallBack(() -> {
             PackageManager pm = getPackageManager();
             Intent intent = pm.getLaunchIntentForPackage(getPackageName());
             finishAffinity();

@@ -15,9 +15,9 @@
     <string name="change_app_language">Change App Language</string>
     <string name="go_premium">Go Premium</string>
     <string name="free_trial_days">First 3 days free,\nthen</string>
-    <string name="per_week">/week</string>
-    <string name="per_month">/month</string>
-    <string name="per_year">/year</string>
+    <string name="per_week">Weekly Premium</string>
+    <string name="per_month">Monthly Premium</string>
+    <string name="per_year">Yearly Premium</string>
     <string name="start_free_trial">Start Free Trial</string>
     <string name="btn_continue">Continue</string>
     <string name="save_75">Save 75%</string>
@@ -34,5 +34,5 @@
     <string name="lightning_fast">Lightning Fast</string>
     <string name="fastest_response_time_ever">Fastest Response Time Ever</string>
     <string name="you_are_on_premium">You are on Premium</string>
-    <string name="unlock_unlimited_access">Unlock Unlimited Access</string>
+    <string name="unlock_unlimited_access">Unlock Premium Access</string>
 </resources>
