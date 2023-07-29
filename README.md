@@ -2,7 +2,6 @@
 
 <div align="center">
 
-![SpeakWise AI](https://img.shields.io/badge/SpeakWise-AI%20ChatBot-blue?style=for-the-badge&logo=android)
 [![Platform](https://img.shields.io/badge/Platform-Android-green?style=for-the-badge&logo=android)](https://developer.android.com/)
 [![API](https://img.shields.io/badge/Min%20SDK-19-orange?style=for-the-badge)](https://developer.android.com/studio/releases/platforms)
 [![GPT](https://img.shields.io/badge/Powered%20By-GPT--3.5%20Turbo-purple?style=for-the-badge&logo=openai)](https://openai.com/)
@@ -15,26 +14,24 @@
 
 ##  Table of Contents
 
-- [Overview](#-overview)
-- [Features](#-features)
-- [Architecture](#-architecture)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Configuration](#-configuration)
-- [API Integration](#-api-integration)
-- [Firebase Services](#-firebase-services)
-- [Monetization](#-monetization)
-- [Security](#-security)
-- [Build & Deployment](#-build--deployment)
-- [Future Works](#-future-works)
-- [License](#-license)
+- [Overview]
+- [Features]
+- [Architecture]
+- [Tech Stack]
+- [Project Structure]
+- [Getting Started]
+- [Configuration]
+- [API Integration]
+- [Firebase Services]
+- [Monetization]
+- [Security]
+- [Build & Deployment]
 
 ---
 
 ##  Overview
 
-SpeakWise AI is a production-ready Android chatbot application that provides users with an intuitive interface to interact with OpenAI's GPT-3.5 Turbo language model. The app supports both text and voice interactions, making AI assistance accessible to everyone.
+SpeakWise AI is a production-ready Android chatbot application that provides users with an intuitive interface to interact with OpenAI's GPT-3.5 Turbo language model. The app supports both text and voice interactions, making AI assistance accessible to everyone. **Free to use with ads**, with an optional subscription to remove ads and unlock unlimited features.
 
 ### Key Highlights
 
