@@ -14,18 +14,18 @@
 
 ##  Table of Contents
 
-- [Overview]
-- [Features]
-- [Architecture]
-- [Tech Stack]
-- [Project Structure]
-- [Getting Started]
-- [Configuration]
-- [API Integration]
-- [Firebase Services]
-- [Monetization]
-- [Security]
-- [Build & Deployment]
+- Overview
+- Features
+- Architecture
+- Tech Stack
+- Project Structure
+- Getting Started
+- Configuration
+- API Integration
+- Firebase Services
+- Monetization
+- Security
+- Build & Deployment
 
 ---
 
